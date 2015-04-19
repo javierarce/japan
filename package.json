@@ -19,7 +19,6 @@
     "expect.js": "latest",
     "express": "latest",
     "express-session": "1.0.4",
-    "firebase": "^2.2.1",
     "html": "latest",
     "method-override": "2.0.2",
     "morgan": "1.0.0",

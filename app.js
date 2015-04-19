@@ -15,7 +15,7 @@ var request = require('request');
 
 var Config         = require("./lib/config").Config;
 var CartoDB        = require('cartodb');
-var Firebase       = require("firebase");
+//var Firebase       = require("firebase");
 
 var app = express();
 
@@ -23,12 +23,12 @@ everyauth.twitter.consumerKey(Config.twitterConsumerKey).consumerSecret(Config.t
   session.twitterUserMetadata = twitterUserMetadata;
   session.save();
 
-  var f = new Firebase("https://cartodb.firebaseio.com/");
+  //var f = new Firebase("https://cartodb.firebaseio.com/");
 
-  f.set({
-    username: twitterUserMetadata.screen_name,
-    avatar: twitterUserMetadata.profile_image_url
-  });
+  //f.set({
+    //username: twitterUserMetadata.screen_name,
+    //avatar: twitterUserMetadata.profile_image_url
+  //});
 
   return {
     screen_name: twitterUserMetadata.screen_name,
