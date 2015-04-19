@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{= screen_name }}</title>
+    <script src="http://www.google.com/jsapi"></script>
+    <script>google.load("jquery", "1.7.1");</script>
+    <script src="/js/app.js"></script>
+    <script src="/js/jquery.easing.min.js"></script>
+    <link href='/css/app.css' rel='stylesheet' type='text/css' />
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
+    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
+    <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
+  </head>
+  <body>
+    <script>
+      var username = "{{= user.screen_name }}";
+      var avatar = "{{= user.profile_image_url }}";
+      var id = "{{= id }}";
+    </script>
+    {% block content %}
+  </body>
+</html>

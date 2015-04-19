@@ -1,0 +1,2 @@
+web: coffee app.coffee
+
