@@ -18,6 +18,7 @@ var CartoDB        = require('cartodb');
 //var Firebase       = require("firebase");
 
 var app = express();
+app.disable('quiet');
 
 everyauth.twitter.consumerKey(Config.twitterConsumerKey).consumerSecret(Config.twitterConsumerSecret).findOrCreateUser(function(session, accessToken, accessTokenSecret, twitterUserMetadata) {
   session.twitterUserMetadata = twitterUserMetadata;
