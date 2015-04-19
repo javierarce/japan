@@ -146,6 +146,7 @@ h3 {
   background:#F05658;
   color:#fff;
   text-align:center;
+  font-weight:bold;
 }
 .Button:hover {
   background:#D54C4E;
@@ -308,7 +309,7 @@ textarea {
   margin: auto;
   background: #2a84d2;
   border-radius: 2px;
-  font-weight:bold;
+  text-decoration: underline;
 }
 .InformationPane .PaneContent .Button:hover {
   background: #2477BE;
