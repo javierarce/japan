@@ -175,7 +175,6 @@ textarea {
   border: 1px solid transparent;
   border-radius: 2px;
   -moz-box-sizing: border-box;
-
   box-sizing: border-box;
 
   font-size: 15px;
@@ -260,3 +259,44 @@ textarea {
 .Spinner{position:absolute;top: 50%; left: 50%; margin-top: -16px; margin-left: -20px; border-top:2px solid #ddd;border-right:2px solid #ddd;border-bottom:2px solid #ddd;border-left:2px solid #0090d7;-webkit-animation:load8 0.8s infinite linear;-khtml-animation:load8 0.8s infinite linear;-moz-animation:load8 0.8s infinite linear;-ms-animation:load8 0.8s infinite linear;-o-animation:load8 0.8s infinite linear;animation:load8 0.8s infinite linear}
 
 .Spinner,.Spinner:after{width:30px;height:30px;border-radius:50%}@-webkit-keyframes load8{0%{-webkit-transform:rotate(0deg);-khtml-transform:rotate(0deg);-moz-transform:rotate(0deg);-ms-transform:rotate(0deg);-o-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg);-khtml-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}@-moz-keyframes load8{0%{-webkit-transform:rotate(0deg);-khtml-transform:rotate(0deg);-moz-transform:rotate(0deg);-ms-transform:rotate(0deg);-o-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg);-khtml-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}@-ms-keyframes load8{0%{-webkit-transform:rotate(0deg);-khtml-transform:rotate(0deg);-moz-transform:rotate(0deg);-ms-transform:rotate(0deg);-o-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg);-khtml-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}@-o-keyframes load8{0%{-webkit-transform:rotate(0deg);-khtml-transform:rotate(0deg);-moz-transform:rotate(0deg);-ms-transform:rotate(0deg);-o-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg);-khtml-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes load8{0%{-webkit-transform:rotate(0deg);-khtml-transform:rotate(0deg);-moz-transform:rotate(0deg);-ms-transform:rotate(0deg);-o-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg);-khtml-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}
+
+.InformationPane {
+  position:absolute;
+  right: 0px;
+  bottom: 0px;
+  width: 500px;
+  padding: 15px 15px 30px 15px;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  z-index: 100;
+}
+.InformationPane .PaneContent {
+  border-radius: 2px;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid transparent;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.success {
+  transition-duration: 500ms;
+  transition-timing-function: ease-in;
+  transition-property:scale opacity;
+}
+
+.test .success {
+  -webkit-transform: scale( 2 );
+  -moz-transform: scale( 2 );
+  -o-transform: scale( 2 );
+  -ms-transform: scale( 2 ) ;
+  transform: scale( 2 );
+  opacity: 0;
+}
+.test .Spinner {
+  display: none;
+}

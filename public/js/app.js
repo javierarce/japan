@@ -1,3 +1,4 @@
+selected = null;
 geocoder = {};
 map = {};
 t = 0;
@@ -14,7 +15,8 @@ var config = {
 };
 
 var onMapClick = function(e) {
-  t = setTimeout(function() {
+  selected = -1;
+  //t = setTimeout(function() {
     var coordinates = [e.latlng.lat, e.latlng.lng];
 
     var latlng = new google.maps.LatLng(coordinates[0], coordinates[1]);
@@ -29,7 +31,7 @@ var onMapClick = function(e) {
         openPopup(map, null, "Something", coordinates);
       }
     });
-  }, 170)
+  //}, 170)
 };
 
 var openPopup = function(map, name, address, coordinates, opts, readonly) {
@@ -55,7 +57,9 @@ var openPopup = function(map, name, address, coordinates, opts, readonly) {
 
   };
 
-  var content = '<div class="header"><h3>' + getPlaceName(name) + '</h3></div><div class="Body"><div class="message"><div class="Spinner"></div><div class="success"></div></div><div class="comment"><img class="Avatar" src="' + profile_image_url + '" /> ' + comment + '</div><textarea placeholder="' + placeholder +'" name="name" rows="8" cols="40"></textarea><div class="Controls"><a href="#" class="Button js-add-place">Add this place</a></div></div><div class="footer">' + address + '</div>';
+  name = getPlaceName(name);
+
+  var content = '<div class="header"><h3>' + name + '</h3></div><div class="Body"><div class="message"><div class="Spinner"></div><div class="success"></div></div><div class="comment"><img class="Avatar" src="' + profile_image_url + '" /> ' + comment + '</div><textarea placeholder="' + placeholder +'" name="name" rows="8" cols="40"></textarea><div class="Controls"><a href="#" class="Button js-add-place">Add this place</a></div></div><div class="footer">' + address + '</div>';
 
   var className = readonly ? "is--readonly" : "";
 
@@ -67,7 +71,9 @@ var openPopup = function(map, name, address, coordinates, opts, readonly) {
   var popup = L.popup(options)
   .setLatLng(coordinates)
   .setContent(content)
-  .openOn(map);
+  .openOn(map)
+
+  map.on("popupclose", function() { selected = null });
 
   var onClickPlace = function(e) {
     e && e.preventDefault();
@@ -77,6 +83,10 @@ var openPopup = function(map, name, address, coordinates, opts, readonly) {
     var $textarea = $el.find("textarea");
     var comment = $textarea.val();
     var data = JSON.stringify({ coordinates: coordinates, name: name, address: address, comment: comment });
+
+    if (!comment) {
+      return;
+    }
 
     $el.find(".message").fadeIn(150);
 
@@ -114,7 +124,7 @@ onVisLoaded = function(vis, layers) {
 
   map.on('click', onMapClick);
 
-  sublayer.setInteractivity('name, description, comment, latitude, longitude, profile_image_url, screen_name');
+  sublayer.setInteractivity('cartodb_id, name, description, comment, latitude, longitude, profile_image_url, screen_name');
 
   var subLayerOptions = {
     sql: "SELECT *, ST_X(ST_Centroid(the_geom)) as longitude,ST_Y(ST_Centroid(the_geom)) as latitude FROM jp",
@@ -123,19 +133,29 @@ onVisLoaded = function(vis, layers) {
   sublayer.set(subLayerOptions);
 
   layer.on('mouseover', function() {
-    $('.leaflet-container').css('cursor','pointer');
+    //$('.leaflet-container').css('cursor','pointer');
   });
 
   layer.on('mouseout', function() {
-    $('.leaflet-container').css('cursor','auto');
+    //$('.leaflet-container').css('cursor','auto');
   });
 
-  layer.on('featureClick', function(e, latlng, pos, data, layer) {
-    if (t) clearTimeout(t);
+  layer.on('featureOut', function(e, latlng, pos, data, layer) {
+    if (selected !== -1) {
+      selected = null;
+      map.closePopup();
+    }
+  });
+
+  layer.on('featureOver', function(e, latlng, pos, data, layer) {
+    if (selected !== -1 && selected !== data.cartodb_id) {
+    selected = data.cartodb_id;
+    //if (t) clearTimeout(t);
     e.preventDefault();
     e.stopPropagation();
-    map.closePopup();
+    //map.closePopup();
     openPopup(map, data.name, data.description, [data.latitude, data.longitude], { comment: data.comment, profile_image_url: data.profile_image_url, screen_name: data.screen_name }, true);
+    }
   });
 
 
@@ -161,12 +181,15 @@ onVisLoaded = function(vis, layers) {
         goToCoordinates(map, coordinates);
 
       setTimeout(function() {
+      selected = -1;
       openPopup(map, place.name, place.formatted_address, coordinates);
       }, 900);
 
     }
 
   }
+
+  $(".js-information-pane > div").html("<h3>Hi!</h3>Sit aspernatur nam quod at suscipit expedita nisi incidunt amet veritatis! Quos officia tempora debitis officia suscipit, voluptatem asperiores laboriosam reiciendis quos recusandae. Obcaecati dolorem illum minus consequuntur itaque recusandae?")
 
   google.maps.event.addListener(autocomplete, 'place_changed', onPlaceChange);
 
