@@ -1,7 +1,7 @@
+popup = {};
 selected = null;
-geocoder = {};
+autocomplete = {}, geocoder = {};
 map = {};
-t = 0;
 
 var config = {
   mapOptions: {
@@ -14,24 +14,46 @@ var config = {
   vizjson: 'https://arce.cartodb.com/api/v2/viz/84c40c80-e5ef-11e4-a74b-0e853d047bba/viz.json'
 };
 
+var onPlaceChange = function() {
+  var place = autocomplete.getPlace();
+
+  if (!place.geometry) {
+    return;
+  }
+  selected = -1;
+
+  if (place.geometry.location) {
+
+    var lat = place.geometry.location.lat();
+    var lng = place.geometry.location.lng();
+    var coordinates = [lat, lng];
+
+
+    goToCoordinates(map, coordinates);
+
+    setTimeout(function() {
+      openPopup(map, place.name, place.formatted_address, coordinates, { type: 1 });
+    }, 900);
+
+  }
+
+}
 var onMapClick = function(e) {
   selected = -1;
-  //t = setTimeout(function() {
   var coordinates = [e.latlng.lat, e.latlng.lng];
 
   var latlng = new google.maps.LatLng(coordinates[0], coordinates[1]);
   geocoder.geocode({'latLng': latlng}, function(results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
       if (results && results.length > 0) {
-        openPopup(map, null, results[0].formatted_address, coordinates);
+        openPopup(map, null, results[0].formatted_address, coordinates, { type: 1});
       } else {
-        openPopup(map, null, "Unknown street", coordinates);
+        openPopup(map, null, "Unknown street", coordinates, { type: 1});
       }
     } else {
-      openPopup(map, null, "Unknown street", coordinates);
+      openPopup(map, null, "Unknown street", coordinates, { type: 1});
     }
   });
-  //}, 170)
 };
 
 var openPopup = function(map, name, address, coordinates, opts, readonly) {
@@ -40,11 +62,11 @@ var openPopup = function(map, name, address, coordinates, opts, readonly) {
   var profile_image_url = "";
 
   if (opts) {
-    comment       = opts.comment;
-    profile_image_url = opts.profile_image_url;
+    comment           = opts.comment;
+    profile_image_url = opts.profile_image_url || avatar;
   }
 
-  var placeholder = "Thanks" + (username !== "anonymous" ? ", " + username : "" )  + "! Why do you think I should go " + (name !== null ? ("to " + name) : " here" ) + "?";
+  var placeholder = "Why do you think I should go " + (name !== null ? ("to " + name) : "here" ) + (username !== "anonymous" ? ", " + username : "" ) + "?";
 
   var getPlaceName = function(name) {
 
@@ -64,11 +86,12 @@ var openPopup = function(map, name, address, coordinates, opts, readonly) {
   var className = readonly ? "is--readonly" : "";
 
   var options = {
+    type: opts.type,
     className: "Popup " + className,
     offset: new L.Point(0, 0)
   };
 
-  var popup = L.popup(options)
+  popup = L.popup(options)
   .setLatLng(coordinates)
   .setContent(content)
   .openOn(map)
@@ -85,6 +108,11 @@ var openPopup = function(map, name, address, coordinates, opts, readonly) {
     var data = JSON.stringify({ coordinates: coordinates, name: name, address: address, comment: comment });
 
     if (!comment) {
+      $wrapper = $el.find(".leaflet-popup-content-wrapper");
+      $wrapper.addClass('animated shake');
+      $wrapper.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+        $wrapper.removeClass("animated shake");
+      });
       return;
     }
 
@@ -108,14 +136,17 @@ var goToCoordinates = function(map, coordinates) {
   }, 500);
 };
 
-onVisLoaded = function(vis, layers) {
-
+var setupOnPressKey = function() {
   $(document).on("keyup", function(e) {
     if (e.keyCode === 27) {
       map.closePopup();
     }
   });
+};
 
+onVisLoaded = function(vis, layers) {
+
+  setupOnPressKey();
   var layer = layers[1]
   layer.setInteraction(true);
   var sublayer = layer.getSubLayer(0);
@@ -133,62 +164,34 @@ onVisLoaded = function(vis, layers) {
   sublayer.set(subLayerOptions);
 
   layer.on('mouseover', function() {
-    //$('.leaflet-container').css('cursor','pointer');
+    if (!popup || (popup && popup.options && popup.options.type !== 1)) {
+      $('.leaflet-container').css('cursor','help');
+    }
   });
 
   layer.on('mouseout', function() {
-    //$('.leaflet-container').css('cursor','auto');
+    $('.leaflet-container').css('cursor','auto');
   });
 
   layer.on('featureOut', function(e, latlng, pos, data, layer) {
-    if (selected !== -1) {
+    if (selected !== -1 && !popup || (popup && popup.options && popup.options.type !== 1)) {
       selected = null;
       map.closePopup();
     }
   });
-
   layer.on('featureOver', function(e, latlng, pos, data, layer) {
+    e & e.preventDefault();
+    e & e.stopPropagation();
+
     if (selected !== -1 && selected !== data.cartodb_id) {
-    selected = data.cartodb_id;
-    //if (t) clearTimeout(t);
-    e.preventDefault();
-    e.stopPropagation();
-    //map.closePopup();
-    openPopup(map, data.name, data.description, [data.latitude, data.longitude], { comment: data.comment, profile_image_url: data.profile_image_url, screen_name: data.screen_name }, true);
+      selected = data.cartodb_id;
+      openPopup(map, data.name, data.description, [data.latitude, data.longitude], { type: 2, comment: data.comment, profile_image_url: data.profile_image_url, screen_name: data.screen_name }, true);
     }
   });
 
-
-  var input = document.getElementById('pac-input');
-  var autocomplete = new google.maps.places.Autocomplete(input);
+  var $input = $(".js-search-place");
+  autocomplete = new google.maps.places.Autocomplete($input[0]);
   geocoder = new google.maps.Geocoder();
-
-  var onPlaceChange = function() {
-
-    var place = autocomplete.getPlace();
-
-    if (!place.geometry) {
-      return;
-    }
-
-    if (place.geometry.location) {
-        selected = -1;
-
-      var lat = place.geometry.location.lat();
-      var lng = place.geometry.location.lng();
-      var coordinates = [lat, lng];
-
-
-        goToCoordinates(map, coordinates);
-
-        setTimeout(function() {
-          openPopup(map, place.name, place.formatted_address, coordinates);
-        }, 900);
-
-    }
-
-  }
-
   google.maps.event.addListener(autocomplete, 'place_changed', onPlaceChange);
 
 }
@@ -199,7 +202,8 @@ $(function() {
     $("body").addClass("is--logged");
   }
 
-  $(".js-information-pane > div").html('<h3>Hi!</h3><p>Sit aspernatur nam quod at suscipit expedita nisi incidunt amet veritatis! Quos officia tempora debitis officia suscipit, voluptatem asperiores laboriosam reiciendis quos recusandae. Obcaecati dolorem illum minus consequuntur itaque recusandae?</p> <a href="/login" class="Button">Login with twitter</a>');
+  $(".js-information-pane > div").html('<h3>Hello, ' + (username !== "anonymous" ? username : "stranger" ) + '!</h3><p>Thanks for helping me with my Japan trip. Please, feel free to add some places you like and some tips for me.<span class="TwitterHelp"><br /><br />Also, if you connect this website with your Twitter account I\'ll know who to say thanks to.</span><br /><br />Best,<br /><a href="http://www.twitter.com/javier">Javier Arce</a></p> <a href="/login" class="Button">Login with Twitter</a>');
+  $('.js-information-pane').show().addClass('animated bounceInUp');
 
 
   cartodb.createVis('map', config.vizjson, config.mapOptions).done(onVisLoaded);

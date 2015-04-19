@@ -158,7 +158,7 @@ insert = function(options, callback) {
 
   var name    = data.name    ? data.name.replace(/'/g, "''") : "";
   var address = data.address ? data.address.replace(/'/g, "''") : "";
-  var address = data.comment ? data.comment.replace(/'/g, "''") : "";
+  var comment = data.comment ? data.comment.replace(/'/g, "''") : "";
 
   var opts = {
     table: options.table,
