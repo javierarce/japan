@@ -21,12 +21,12 @@ var onMapClick = function(e) {
     geocoder.geocode({'latLng': latlng}, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
         if (results && results.length > 0) {
-          openPopup(map, "Unknown", results[0].formatted_address, coordinates);
+          openPopup(map, null, results[0].formatted_address, coordinates);
         } else {
-          openPopup(map, "Unknown", "Something", coordinates);
+          openPopup(map, null, "Something", coordinates);
         }
       } else {
-        openPopup(map, "Unknown", "Something", coordinates);
+        openPopup(map, null, "Something", coordinates);
       }
     });
   }, 170)
@@ -42,9 +42,20 @@ var openPopup = function(map, name, address, coordinates, opts, readonly) {
     profile_image_url = opts.profile_image_url;
   }
 
-  var placeholder = "Thanks" + (username !== "anonymous" ? ", " + username : "" )  + "! Why do you think I should go here?";
+  var placeholder = "Thanks" + (username !== "anonymous" ? ", " + username : "" )  + "! Why do you think I should go " + (name !== null ? ("to " + name) : " here" ) + "?";
 
-  var content = '<div class="header"><h3>' + name + '</h3></div><div class="Body"><div class="message"><div class="Spinner"></div><div class="success"></div></div><div class="comment"><img class="Avatar" src="' + profile_image_url + '" /> ' + comment + '</div><textarea placeholder="' + placeholder +'" name="name" rows="8" cols="40"></textarea><div class="Controls"><a href="#" class="Button js-add-place">Add this place</a></div></div><div class="footer">' + address + '</div>';
+  var getPlaceName = function(name) {
+
+    if (name) {
+      return name;
+    }
+
+    var places = ["Unknown place", "Misterious place", "Misterious location", "Unkown spot"];
+    return _.shuffle(places)[0];
+
+  };
+
+  var content = '<div class="header"><h3>' + getPlaceName(name) + '</h3></div><div class="Body"><div class="message"><div class="Spinner"></div><div class="success"></div></div><div class="comment"><img class="Avatar" src="' + profile_image_url + '" /> ' + comment + '</div><textarea placeholder="' + placeholder +'" name="name" rows="8" cols="40"></textarea><div class="Controls"><a href="#" class="Button js-add-place">Add this place</a></div></div><div class="footer">' + address + '</div>';
 
   var className = readonly ? "is--readonly" : "";
 
