@@ -20,7 +20,7 @@ var CartoDB        = require('cartodb');
 var app = express();
 
 console.log("---------------")
-console.log(process.env.NODE_ENV)
+console.log(Config)
 console.log("---------------")
 
 everyauth.twitter.consumerKey(Config.twitterConsumerKey).consumerSecret(Config.twitterConsumerSecret).findOrCreateUser(function(session, accessToken, accessTokenSecret, twitterUserMetadata) {
