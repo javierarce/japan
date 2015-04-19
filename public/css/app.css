@@ -266,7 +266,7 @@ textarea {
   position:absolute;
   right: 0px;
   bottom: 0px;
-  width: 500px;
+  width: 350px;
   padding: 15px 15px 30px 15px;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -280,11 +280,32 @@ textarea {
   background-color: #fff;
   border-radius: 2px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  padding: 10px;
+  padding: 10px 10px 15px 10px;
   box-sizing: border-box;
   font-size: 14px;
+  text-align: center;
+}
+.InformationPane .PaneContent h3 {
+  text-align:left;
+  border-bottom: 1px solid #f1f1f1;
+  margin: 0 0 10px 0;
+  padding: 0 0 5px 0;
+}
+.InformationPane .PaneContent p {
+  margin-bottom: 10px;
+  text-align: left;
 }
 
+.InformationPane .PaneContent .Button {
+  width: 200px;
+  margin: auto;
+  background: #2a84d2;
+  border-radius: 2px;
+  font-weight:bold;
+}
+.InformationPane .PaneContent .Button:hover {
+  background: #2477BE;
+}
 .is--logged .InformationPane .PaneContent .Button {
   display:none;
 }

@@ -189,8 +189,6 @@ onVisLoaded = function(vis, layers) {
 
   }
 
-  $(".js-information-pane > div").html('<h3>Hi!</h3><p>Sit aspernatur nam quod at suscipit expedita nisi incidunt amet veritatis! Quos officia tempora debitis officia suscipit, voluptatem asperiores laboriosam reiciendis quos recusandae. Obcaecati dolorem illum minus consequuntur itaque recusandae?</p> <a href="/login" class="Button">Login with twitter</a>');
-
   google.maps.event.addListener(autocomplete, 'place_changed', onPlaceChange);
 
 }
@@ -200,6 +198,9 @@ $(function() {
   if (username !== "anonymous") {
     $("body").addClass("is--logged");
   }
+
+  $(".js-information-pane > div").html('<h3>Hi!</h3><p>Sit aspernatur nam quod at suscipit expedita nisi incidunt amet veritatis! Quos officia tempora debitis officia suscipit, voluptatem asperiores laboriosam reiciendis quos recusandae. Obcaecati dolorem illum minus consequuntur itaque recusandae?</p> <a href="/login" class="Button">Login with twitter</a>');
+
 
   cartodb.createVis('map', config.vizjson, config.mapOptions).done(onVisLoaded);
 });
