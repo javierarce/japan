@@ -17,7 +17,7 @@
     "errorhandler": "1.0.1",
     "everyauth": "latest",
     "expect.js": "latest",
-    "express": "~4.9.x"
+    "express": "~4.9.x",
     "express-session": "1.0.4",
     "html": "latest",
     "method-override": "2.0.2",
