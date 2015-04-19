@@ -44,10 +44,12 @@ var openPopup = function(map, name, address, coordinates, opts, readonly) {
 
   var placeholder = "Thanks" + (username !== "anonymous" ? ", " + username : "" )  + "! Why do you think I should go here?";
 
-  var content = '<div class="header"><h3>' + name + '</h3></div><div class="body"><div class="message"><div class="Spinner"></div><div class="success"></div></div><div class="comment"><img class="Avatar" src="' + profile_image_url + '" /> ' + comment + '</div><textarea placeholder="' + placeholder +'" name="name" rows="8" cols="40"></textarea><div class="controls"><a href="#" class="Button js-add-place">Add this place</a></div></div><div class="footer">' + address + '</div>';
+  var content = '<div class="header"><h3>' + name + '</h3></div><div class="Body"><div class="message"><div class="Spinner"></div><div class="success"></div></div><div class="comment"><img class="Avatar" src="' + profile_image_url + '" /> ' + comment + '</div><textarea placeholder="' + placeholder +'" name="name" rows="8" cols="40"></textarea><div class="Controls"><a href="#" class="Button js-add-place">Add this place</a></div></div><div class="footer">' + address + '</div>';
 
-  var options = { 
-    className: readonly ? "readonly" : "",
+  var className = readonly ? "is--readonly" : "";
+
+  var options = {
+    className: "Popup " + className,
     offset: new L.Point(0, 0)
   };
 

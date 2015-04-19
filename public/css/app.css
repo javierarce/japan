@@ -80,12 +80,6 @@ h3 {
   min-height: 30px;
 }
 
-.body {
-  border-bottom: 1px solid #f1f1f1;
-  min-width: 300px;
-  position: relative;
-}
-
 .message {
   display:none;
   position:absolute;
@@ -106,12 +100,16 @@ h3 {
   background:#F05658;
   box-sizing: border-box;
 }
-.controls {
+.Popup .Body {
+  position: relative;
+  min-width: 300px;
+  border-bottom: 1px solid #f1f1f1;
+}
+.Popup .Body .Controls {
   padding: 10px 10px;
   text-align: center;
 }
-
-.body .controls a.Button {
+.Popup .Body .Controls .Button {
   display: inline-block;
   color: #333;
   text-decoration: none;
@@ -120,14 +118,30 @@ h3 {
   width: 100%;
   padding: 10px 0;
 }
-
-.body .controls a.Button:hover {
+.Popup .Body .Controls .Button:hover {
   background:#ccc;
 }
+.Popup.is--readonly .comment { display: block; }
+.Popup.is--readonly textarea { display: none; }
+.Popup.is--readonly .Controls { display: none; }
 
-.readonly .comment { display: block; }
-.readonly textarea { display: none; }
-.readonly .controls { display: none; }
+.Popup .header {
+  padding: 10px;
+  border-bottom: 1px solid #f1f1f1;
+  border-radius: 3px 3px 0 0;
+  background: rgb(255, 249, 127);
+}
+
+.Popup .footer {
+  font-size: 12px;
+  color: #666;
+  padding: 10px;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-sizing: border-box;
+}
 
 textarea {
   outline:none;
@@ -141,24 +155,6 @@ textarea {
   height: 100px;
   min-width: 300px;
   resize: none;
-}
-
-.header {
-  padding: 10px;
-  border-bottom: 1px solid #f1f1f1;
-  border-radius: 3px 3px 0 0;
-  background: rgb(255, 249, 127);
-}
-
-.footer {
-  font-size: 12px;
-  color: #666;
-  padding: 10px;
-  width: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  box-sizing: border-box;
 }
 
 .InputField {
@@ -185,7 +181,7 @@ textarea {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   z-index: 100;
 }
-.custom-popup .leaflet-popup-content-wrapper {
+.Popup .leaflet-popup-content-wrapper {
   background:#fff;
   font-size:14px;
   line-height:24px;
@@ -196,22 +192,20 @@ textarea {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   padding: 0;
 }
-.custom-popup .leaflet-popup-content-wrapper a {
+.Popup .leaflet-popup-content-wrapper a {
   color:rgba(255,255,255,0.5);
 }
-.custom-popup .leaflet-popup .leaflet-popup-close-button {
+.Popup .leaflet-popup .leaflet-popup-close-button {
   top: 9px;
   right: 5px;
   font-weight: normal;
   font-size: 12px;
   color: #333;
 }
-.custom-popup .leaflet-popup-content {
+.Popup .leaflet-popup-content {
   margin: 0;
 }
-.custom-popup .leaflet-popup-tip-container {
-}
-.custom-popup .leaflet-popup-tip {
+.Popup .leaflet-popup-tip {
   width: 12px;
   height: 12px;
   padding: 1px;
