@@ -17,20 +17,20 @@ var config = {
 var onMapClick = function(e) {
   selected = -1;
   //t = setTimeout(function() {
-    var coordinates = [e.latlng.lat, e.latlng.lng];
+  var coordinates = [e.latlng.lat, e.latlng.lng];
 
-    var latlng = new google.maps.LatLng(coordinates[0], coordinates[1]);
-    geocoder.geocode({'latLng': latlng}, function(results, status) {
-      if (status == google.maps.GeocoderStatus.OK) {
-        if (results && results.length > 0) {
-          openPopup(map, null, results[0].formatted_address, coordinates);
-        } else {
-          openPopup(map, null, "Something", coordinates);
-        }
+  var latlng = new google.maps.LatLng(coordinates[0], coordinates[1]);
+  geocoder.geocode({'latLng': latlng}, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+      if (results && results.length > 0) {
+        openPopup(map, null, results[0].formatted_address, coordinates);
       } else {
-        openPopup(map, null, "Something", coordinates);
+        openPopup(map, null, "Unknown street", coordinates);
       }
-    });
+    } else {
+      openPopup(map, null, "Unknown street", coordinates);
+    }
+  });
   //}, 170)
 };
 
@@ -172,6 +172,7 @@ onVisLoaded = function(vis, layers) {
     }
 
     if (place.geometry.location) {
+        selected = -1;
 
       var lat = place.geometry.location.lat();
       var lng = place.geometry.location.lng();
@@ -180,21 +181,25 @@ onVisLoaded = function(vis, layers) {
 
         goToCoordinates(map, coordinates);
 
-      setTimeout(function() {
-      selected = -1;
-      openPopup(map, place.name, place.formatted_address, coordinates);
-      }, 900);
+        setTimeout(function() {
+          openPopup(map, place.name, place.formatted_address, coordinates);
+        }, 900);
 
     }
 
   }
 
-  $(".js-information-pane > div").html("<h3>Hi!</h3>Sit aspernatur nam quod at suscipit expedita nisi incidunt amet veritatis! Quos officia tempora debitis officia suscipit, voluptatem asperiores laboriosam reiciendis quos recusandae. Obcaecati dolorem illum minus consequuntur itaque recusandae?")
+  $(".js-information-pane > div").html('<h3>Hi!</h3><p>Sit aspernatur nam quod at suscipit expedita nisi incidunt amet veritatis! Quos officia tempora debitis officia suscipit, voluptatem asperiores laboriosam reiciendis quos recusandae. Obcaecati dolorem illum minus consequuntur itaque recusandae?</p> <a href="/login" class="Button">Login with twitter</a>');
 
   google.maps.event.addListener(autocomplete, 'place_changed', onPlaceChange);
 
 }
 
 $(function() {
+
+  if (username !== "anonymous") {
+    $("body").addClass("is--logged");
+  }
+
   cartodb.createVis('map', config.vizjson, config.mapOptions).done(onVisLoaded);
 });

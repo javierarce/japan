@@ -144,6 +144,7 @@ h3 {
   text-decoration: none;
   background:#F05658;
   color:#fff;
+  text-align:center;
 }
 .Button:hover {
   background:#D54C4E;
@@ -161,6 +162,7 @@ textarea {
   height: 100px;
   min-width: 300px;
   resize: none;
+  word-break: break-word;
 }
 
 .InputField {
@@ -283,20 +285,6 @@ textarea {
   font-size: 14px;
 }
 
-.success {
-  transition-duration: 500ms;
-  transition-timing-function: ease-in;
-  transition-property:scale opacity;
-}
-
-.test .success {
-  -webkit-transform: scale( 2 );
-  -moz-transform: scale( 2 );
-  -o-transform: scale( 2 );
-  -ms-transform: scale( 2 ) ;
-  transform: scale( 2 );
-  opacity: 0;
-}
-.test .Spinner {
-  display: none;
+.is--logged .InformationPane .PaneContent .Button {
+  display:none;
 }

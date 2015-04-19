@@ -156,15 +156,19 @@ insert = function(options, callback) {
   console.log(options);
   console.log(query)
 
+  var name    = data.name    ? data.name.replace(/'/g, "''") : "";
+  var address = data.address ? data.address.replace(/'/g, "''") : "";
+  var address = data.comment ? data.comment.replace(/'/g, "''") : "";
+
   var opts = {
     table: options.table,
     lat: data.coordinates[0],
     lng: data.coordinates[1],
-    name: data.name.replace(/'/g, "''"),
+    name: name,
     screen_name: options.twitter.screen_name,
     profile_image_url: options.twitter.profile_image_url,
-    description: data.address.replace(/'/g, "''"),
-    comment: data.comment.replace(/'/g, "''")
+    description: address,
+    comment: comment
   };
 
   console.log(opts);
