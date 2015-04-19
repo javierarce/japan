@@ -56,8 +56,7 @@ var onMapClick = function(e) {
   });
 };
 
-var openPopup = function(map, name, address, coordinates, opts, readonly) {
-
+var getPopupContent = function(map, name, address, coordinates, opts, readonly) {
   var comment = "";
   var profile_image_url = "";
 
@@ -91,9 +90,17 @@ var openPopup = function(map, name, address, coordinates, opts, readonly) {
     offset: new L.Point(0, 0)
   };
 
-  popup = L.popup(options)
+  return { content: content, options: options };
+
+};
+
+var openPopup = function(map, name, address, coordinates, opts, readonly) {
+
+  var content = getPopupContent(map, name, address, coordinates, opts, readonly);
+
+  popup = L.popup(content.options)
   .setLatLng(coordinates)
-  .setContent(content)
+  .setContent(content.content)
   .openOn(map)
 
   map.on("popupclose", function() { selected = null });
@@ -120,6 +127,20 @@ var openPopup = function(map, name, address, coordinates, opts, readonly) {
 
     $.ajax({ url: "/place", data: data, type: "POST", contentType: "application/json", dataType: "json" }).done(function(data) {
       $el.find(".message .success").animate({ top: 0 }, { duration: 100, easing: "easeOutQuad" });
+
+      var geojsonMarkerOptions = {
+        radius: 7,
+        fillColor: "#f05658",
+        color: "#ffffff",
+        weight: 1.5,
+        opacity: 0.9,
+        fillOpacity: 1
+      };
+
+      var marker = L.circleMarker(coordinates, geojsonMarkerOptions);
+      marker.addTo(map);
+      var content = getPopupContent(map, name, address, coordinates, { type: 2, comment: comment, profile_image_url: avatar, screen_name: username }, true)
+      marker.bindPopup(content.content, content.options)
     });
   };
 
@@ -202,7 +223,7 @@ $(function() {
     $("body").addClass("is--logged");
   }
 
-  $(".js-information-pane > div").html('<h3>Hello, ' + (username !== "anonymous" ? username : "stranger" ) + '!</h3><p>Thanks for helping me with my Japan trip. Please, feel free to add some places you like and some tips for me.<span class="TwitterHelp"><br /><br />Also, if you connect this website with your Twitter account I\'ll know who to say thanks to.</span><br /><br />Best,<br /><a href="http://www.twitter.com/javier">Javier Arce</a></p> <a href="/login" class="Button">Login with Twitter</a>');
+  $(".js-information-pane > div").html('<h3>Hello, ' + (username !== "anonymous" ? username : "stranger" ) + '!</h3><p>Thanks for helping me with my Japan trip! Please, feel free to add some places you like and some tips for me.<span class="TwitterHelp"><br /><br />Also, if you connect this website with your Twitter account I\'ll know who to say thanks to.</span><br /><br />Best,<br /><a href="http://www.twitter.com/javier">Javier Arce</a></p> <a href="/login" class="Button">Login with Twitter</a>');
   $('.js-information-pane').show().addClass('animated bounceInUp');
 
 
