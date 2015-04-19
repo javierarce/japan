@@ -18,7 +18,6 @@ var CartoDB        = require('cartodb');
 //var Firebase       = require("firebase");
 
 var app = express();
-app.disable('quiet');
 
 everyauth.twitter.consumerKey(Config.twitterConsumerKey).consumerSecret(Config.twitterConsumerSecret).findOrCreateUser(function(session, accessToken, accessTokenSecret, twitterUserMetadata) {
   session.twitterUserMetadata = twitterUserMetadata;
@@ -55,8 +54,8 @@ cartoDB = new CartoDB({
   api_key: Config.cartoDB_API_KEY
 });
 
-cartoDBLog = require("fs").createWriteStream(__dirname + "/log/responses.log");
-cartoDB.pipe(cartoDBLog);
+//cartoDBLog = require("fs").createWriteStream(__dirname + "/log/responses.log");
+//cartoDB.pipe(cartoDBLog);
 cartoDB.connect();
 cartoDB.on("connect", function() {
   return console.log("connected");
