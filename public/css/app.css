@@ -104,22 +104,14 @@ h3 {
   position: relative;
   min-width: 300px;
   border-bottom: 1px solid #f1f1f1;
+  word-break: break-all;
 }
 .Popup .Body .Controls {
   padding: 10px 10px;
   text-align: center;
 }
 .Popup .Body .Controls .Button {
-  display: inline-block;
-  color: #333;
-  text-decoration: none;
-  background:#F05658;
-  color:#fff;
-  width: 100%;
-  padding: 10px 0;
-}
-.Popup .Body .Controls .Button:hover {
-  background:#ccc;
+  color: #fff;
 }
 .Popup.is--readonly .comment { display: block; }
 .Popup.is--readonly textarea { display: none; }
@@ -130,6 +122,8 @@ h3 {
   border-bottom: 1px solid #f1f1f1;
   border-radius: 3px 3px 0 0;
   background: rgb(255, 249, 127);
+  background: -webkit-linear-gradient(108deg, #70d0ee, #2a84d2 90%);
+  color: #fff;
 }
 
 .Popup .footer {
@@ -141,6 +135,18 @@ h3 {
   overflow: hidden;
   text-overflow: ellipsis;
   box-sizing: border-box;
+}
+
+.Button {
+  width: 100%;
+  padding: 10px 0;
+  display: inline-block;
+  text-decoration: none;
+  background:#F05658;
+  color:#fff;
+}
+.Button:hover {
+  background:#D54C4E;
 }
 
 textarea {
@@ -163,7 +169,7 @@ textarea {
   width: 500px;
   height: 43px;
   padding: 0 11px 0 13px;
-  left: 30px;
+  left: 35px;
 
   background-color: #fff;
   border: 1px solid transparent;
@@ -195,11 +201,14 @@ textarea {
 .Popup .leaflet-popup-content-wrapper a {
   color:rgba(255,255,255,0.5);
 }
-.Popup .leaflet-popup .leaflet-popup-close-button {
+.Popup.leaflet-popup .leaflet-popup-close-button {
   top: 9px;
   right: 5px;
   font-weight: normal;
   font-size: 12px;
+  color: #fff;
+}
+.Popup.leaflet-popup .leaflet-popup-close-button:hover {
   color: #333;
 }
 .Popup .leaflet-popup-content {
@@ -235,10 +244,12 @@ textarea {
   text-indent: 0;
   padding: 10px 0;
   box-sizing: border-box;
+  outline:none;
 }
 #map .cartodb-zoom a:hover {
   background:#f1f1f1;
 }
+
 .Avatar{
   width: 30px;
   float: left;
@@ -246,6 +257,6 @@ textarea {
   border-radius: 50%;
 }
 
-.Spinner{position:absolute;top: 50%; left: 50%; margin-top: -20px; margin-left: -20px; border-top:2px solid #ddd;border-right:2px solid #ddd;border-bottom:2px solid #ddd;border-left:2px solid #0090d7;-webkit-animation:load8 0.8s infinite linear;-khtml-animation:load8 0.8s infinite linear;-moz-animation:load8 0.8s infinite linear;-ms-animation:load8 0.8s infinite linear;-o-animation:load8 0.8s infinite linear;animation:load8 0.8s infinite linear}
+.Spinner{position:absolute;top: 50%; left: 50%; margin-top: -16px; margin-left: -20px; border-top:2px solid #ddd;border-right:2px solid #ddd;border-bottom:2px solid #ddd;border-left:2px solid #0090d7;-webkit-animation:load8 0.8s infinite linear;-khtml-animation:load8 0.8s infinite linear;-moz-animation:load8 0.8s infinite linear;-ms-animation:load8 0.8s infinite linear;-o-animation:load8 0.8s infinite linear;animation:load8 0.8s infinite linear}
 
 .Spinner,.Spinner:after{width:30px;height:30px;border-radius:50%}@-webkit-keyframes load8{0%{-webkit-transform:rotate(0deg);-khtml-transform:rotate(0deg);-moz-transform:rotate(0deg);-ms-transform:rotate(0deg);-o-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg);-khtml-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}@-moz-keyframes load8{0%{-webkit-transform:rotate(0deg);-khtml-transform:rotate(0deg);-moz-transform:rotate(0deg);-ms-transform:rotate(0deg);-o-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg);-khtml-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}@-ms-keyframes load8{0%{-webkit-transform:rotate(0deg);-khtml-transform:rotate(0deg);-moz-transform:rotate(0deg);-ms-transform:rotate(0deg);-o-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg);-khtml-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}@-o-keyframes load8{0%{-webkit-transform:rotate(0deg);-khtml-transform:rotate(0deg);-moz-transform:rotate(0deg);-ms-transform:rotate(0deg);-o-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg);-khtml-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes load8{0%{-webkit-transform:rotate(0deg);-khtml-transform:rotate(0deg);-moz-transform:rotate(0deg);-ms-transform:rotate(0deg);-o-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg);-khtml-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}
