@@ -91,6 +91,9 @@ License: none (public domain)
       font-weight:bold;
       padding: 0;
       margin: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .Popup .comment {
@@ -135,6 +138,9 @@ License: none (public domain)
     .Popup.is--readonly .comment { display: block; }
     .Popup.is--readonly textarea { display: none; }
     .Popup.is--readonly .Controls { display: none; }
+    .Popup.is--readonly.leaflet-popup .leaflet-popup-close-button {
+      display:none;
+    }
 
     .Popup .header {
       padding: 10px;

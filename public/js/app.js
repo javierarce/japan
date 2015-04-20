@@ -174,7 +174,7 @@ var App = Backbone.View.extend({
 
   initialize: function() {
 
-    _.bindAll(this, "_onVisLoaded", "_onPlaceChange", "_onClickPlace", "_onMapClick", "_onFinishedGeocoding", "_onMouseOver", "_onMouseOut", "_canClosePopup", "_onFeatureOver", "_onFeatureOut");
+    _.bindAll(this, "_onVisLoaded", "_onPlaceChange", "_onClickPlace", "_onMapClick", "_onFinishedGeocoding", "_onMouseOver", "_onMouseOut", "_canClosePopup", "_onFeatureClick", "_onFeatureOver", "_onFeatureOut");
 
     this._setupModel();
 
@@ -226,10 +226,11 @@ var App = Backbone.View.extend({
 
     sublayer.set(subLayerOptions);
 
-    layer.on('mouseover',   this._onMouseOver);
-    layer.on('mouseout',    this._onMouseOut);
-    layer.on('featureOut',  this._onFeatureOut, this);
-    layer.on('featureOver', this._onFeatureOver);
+    layer.on('mouseover',    this._onMouseOver);
+    layer.on('mouseout',     this._onMouseOut);
+    layer.on('featureOut',   this._onFeatureOut);
+    layer.on('featureOver',  this._onFeatureOver);
+    layer.on('featureClick', this._onFeatureClick);
 
     var $input = $(".js-search-place");
 
@@ -262,6 +263,18 @@ var App = Backbone.View.extend({
     return (!this.popup || (this.popup && this.popup.options && this.popup.options.type !== 1));
   },
 
+  _onFeatureClick: function(e, latlng, pos, data, layer) {
+    this._killEvent(e);
+
+    if (this.t) {
+      clearInterval(this.t);
+    }
+
+    this.map.closePopup();
+    this.model.set("selected", data.cartodb_id);
+    this._openPopup(data.name, data.description, [data.latitude, data.longitude], { type: 2, comment: data.comment, profile_image_url: data.profile_image_url, screen_name: data.screen_name }, true);
+  },
+
   _onFeatureOver: function(e, latlng, pos, data, layer) {
     this._killEvent(e);
 
@@ -286,16 +299,17 @@ var App = Backbone.View.extend({
   },
 
   _onMapClick: function(e) {
-
-    this.model.set("selected", -1);
-    var coordinates = [e.latlng.lat, e.latlng.lng];
-    var latlng = new google.maps.LatLng(coordinates[0], coordinates[1]);
-
     var self = this;
 
-    this.geocoder.geocode({ 'latLng': latlng }, function(results, status) {
-      self._onFinishedGeocoding(coordinates, results, status);
-    });
+    this.t = setTimeout(function()  {
+      self.model.set("selected", -1);
+      var coordinates = [e.latlng.lat, e.latlng.lng];
+      var latlng = new google.maps.LatLng(coordinates[0], coordinates[1]);
+
+      self.geocoder.geocode({ 'latLng': latlng }, function(results, status) {
+        self._onFinishedGeocoding(coordinates, results, status);
+      });
+    }, 200);
   },
 
   _getPlaceName: function(name) {
