@@ -335,6 +335,10 @@ textarea {
   background: rgba(0,0,0, .2);
   border-radius:40px;
 }
+.CommentsPane.is--open .ToggleButton:after {
+  background: url("/img/reverse_arrow.svg");
+  right: 11px;
+}
 
 .CommentsPane .ToggleButton:after {
   content: "";
