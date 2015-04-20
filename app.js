@@ -14,6 +14,8 @@ var fs             = require('fs');
 var request        = require('request');
 var Config         = require("./lib/config").Config;
 var CartoDB        = require('cartodb');
+var sanitizeHtml   = require('sanitize-html');
+
 //var Firebase     = require("firebase");
 
 var app = express();
@@ -160,6 +162,12 @@ insert = function(options, callback) {
   var name    = data.name    ? data.name.replace(/'/g, "''") : "";
   var address = data.address ? data.address.replace(/'/g, "''") : "";
   var comment = data.comment ? data.comment.replace(/'/g, "''") : "";
+
+  var allowedTags = [ 'b', 'i', 'em', 'strong' ];
+
+  name    = sanitizeHtml(name);
+  comment = sanitizeHtml(comment, { allowedTags: allowedTags });
+  address = sanitizeHtml(address);
 
   var opts = {
     table: options.table,
