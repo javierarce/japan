@@ -1,3 +1,11 @@
+var InfoPod = Backbone.View.extend({
+  initialize: function() {
+  },
+
+  render: function() {
+  }
+});
+
 var InformationPane = Backbone.View.extend({
 
   className: "InformationPane",
@@ -189,7 +197,9 @@ var App = Backbone.View.extend({
 
     name = getPlaceName(name);
 
-    var content = '<div class="header"><h3>' + name + '</h3></div><div class="Body"><div class="message"><div class="Spinner"></div><div class="success"></div></div><div class="comment"><img class="Avatar" src="' + profile_image_url + '" /> ' + comment + '</div><textarea placeholder="' + placeholder +'" name="name" rows="8" cols="40"></textarea><div class="Controls"><a href="#" class="Button js-add-place">Add this place</a></div></div><div class="footer">' + address + '</div>';
+    var template = '<div class="header"><h3><%= name %></h3></div><div class="Body"><div class="message"><div class="Spinner"></div><div class="success"></div></div><div class="comment"><img class="Avatar" src="<%= profile_image_url %>" /><%= comment %></div><textarea placeholder="<%= placeholder %>" name="name" rows="8" cols="40"></textarea><div class="Controls"><a href="#" class="Button js-add-place">Add this place</a></div></div><div class="footer"><%= address %></div>';
+
+    var content = _.template(template, { name: name, profile_image_url: profile_image_url, placeholder: placeholder, address: address, comment: comment });
 
     var className = readonly ? "is--readonly" : "";
 
