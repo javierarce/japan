@@ -113,7 +113,7 @@ var InformationPane = Backbone.View.extend({
 
   className: "InformationPane",
 
-  template: '<div class="PaneContent"><h3>Hello, <%= username %>!</h3><p>As you may have heard, I\'m planning a trip to Japan in the end of May. What places should I visit? Where should I eat? What are the hidden secrets of this magical and crazy island? Please, feel free to add some places you like using the search field up there.<span class="TwitterHelp"><br /><br />Also, if you connect this website with your Twitter account I\'ll know who to say thanks to.</span><br /><br />どうもありがとう,<br /><a href="http://www.twitter.com/javier">Javier Arce</a></p> <a href="/login" class="Button">Connecdt with Twitter</a></div>', 
+  template: '<div class="PaneContent"><h3>Hello, <%= username %>!</h3><p>As you may have heard, I\'m planning a trip to Japan in the end of May. What places should I visit? Where should I eat? What are the hidden secrets of this magical and crazy island? Please, feel free to add some places you like using the search field up there.<span class="TwitterHelp"><br /><br />Also, if you connect this website with your Twitter account I\'ll know who to say thanks to.</span><br /><br />どうもありがとう,<br /><a href="http://www.twitter.com/javier">Javier Arce</a></p> <a href="/login" class="Button">Connect with Twitter</a></div>', 
 
   initialize: function(options) {
     this.options = options;
