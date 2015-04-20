@@ -116,7 +116,11 @@ var App = Backbone.View.extend({
     layer.on('featureOver', this._onFeatureOver);
 
     var $input = $(".js-search-place");
-    this.autocomplete = new google.maps.places.Autocomplete($input[0]);
+
+    this.autocomplete = new google.maps.places.Autocomplete($input[0], {
+      componentRestrictions: { country: "jp" }
+    });
+
     this.geocoder = new google.maps.Geocoder();
     google.maps.event.addListener(this.autocomplete, 'place_changed', this._onPlaceChange);
   },
