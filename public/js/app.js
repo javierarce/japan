@@ -1,8 +1,69 @@
-var InfoPod = Backbone.View.extend({
+var Comment = Backbone.Model.extend({
+});
+
+var Comments = Backbone.Collection.extend({
+  model: Comment,
+  url: "https://arce.cartodb.com/api/v2/sql?q=SELECT *, ST_X(ST_Centroid(the_geom)) as longitude,ST_Y(ST_Centroid(the_geom)) as latitude FROM jp",
+  parse: function(response) {
+    return response.rows;
+  }
+});
+
+var CommentsView = Backbone.View.extend({
+
+  className: "CommentsPane",
+
+  template: '<ul class="CommentList"></ul>',
+
+  initialize: function() {
+    this.comments = new Comments();
+    this.comments.bind("reset", this.render, this);
+    this.comments.fetch();
+  },
+
+  render: function() {
+    var self = this;
+
+    this.$el.html(_.template(this.template));
+
+    this.comments.each(function(comment) {
+      var view = new CommentView({ model: comment })
+      self.$el.find("ul").append(view.render().$el);
+    });
+
+    return this;
+  }
+
+});
+
+var CommentView = Backbone.View.extend({
+
+  events: {
+    "click": "_onMouseClick"
+  },
+
+  tagName: "li",
+
+  className: "CommentItem",
+
+  template: '<div class="header"><h3><%= name %></h3></div><div class="Body"><div class="comment"><a href="http://twitter.com/<%= screen_name %>"><img class="Avatar" src="<%= profile_image_url %>" /></a><p><%= comment %></p></div></div><div class="footer"><%= description %></div>',
+
   initialize: function() {
   },
 
   render: function() {
+    var comment = this.model.get("comment").length > 140 ? this.model.get("comment").substring(0, 140) + '...' : this.model.get("comment");
+    var options = _.extend(this.model.toJSON(), { comment: comment });
+    this.$el.append(_.template(this.template, options));
+    return this;
+  },
+
+  _onMouseClick: function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    var coordinates = [this.model.get("latitude"), this.model.get("longitude")];
+    app.map.panTo(coordinates);
+    app.map.setZoom(15);
   }
 });
 
@@ -76,6 +137,8 @@ var App = Backbone.View.extend({
 
     var information = new InformationPane({ username: username });
     this.$el.append(information.render().$el);
+    this.comments = new CommentsView();
+    this.$el.append(this.comments.render().$el);
 
   },
 
@@ -207,7 +270,7 @@ var App = Backbone.View.extend({
       profile_image_url: profile_image_url,
       placeholder: placeholder,
       address: address,
-      comment: comment 
+      comment: comment
     });
 
     var options = {
@@ -233,6 +296,7 @@ var App = Backbone.View.extend({
       var coordinates = [place.geometry.location.lat(), place.geometry.location.lng()];
       this._goToCoordinates(coordinates);
 
+      console.log(place)
       var self = this;
       setTimeout(function() {
         self._openPopup(place.name, place.formatted_address, coordinates, { type: 1 });
