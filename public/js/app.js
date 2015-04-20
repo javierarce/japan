@@ -1,16 +1,62 @@
+var InfoPod = Backbone.View.extend({
+  initialize: function() {
+  },
+
+  render: function() {
+  }
+});
+
+var InformationPane = Backbone.View.extend({
+
+  className: "InformationPane",
+
+  template: '<div class="PaneContent"><h3>Hello, <%= username %>!</h3><p>Thanks for helping me out with my Japan trip!<br /><br />Please, feel free to add some places you like using the search field up there. <span class="TwitterHelp">Also, if you connect this website with your Twitter account I\'ll know who to say thanks to.</span><br /><br />Best,<br /><a href="http://www.twitter.com/javier">Javier Arce</a></p> <a href="/login" class="Button">Login with Twitter</a></div>', 
+
+  initialize: function(options) {
+    this.options = options;
+  },
+
+  render: function() {
+    var username = this.options.username !== "anonymous" ? this.options.username : "stranger";
+
+    this.$el.append(_.template(this.template, { username: username }));
+
+    this.$el.show().addClass('animated bounceInUp');
+
+    return this;
+  }
+});
+
 var App = Backbone.View.extend({
 
+  el: "body",
+
   defaults: {
+    places: ["Unknown place", "Misterious place", "Misterious location", "Unkown spot"],
     mapOptions: {
-      https:true,
+      https: true,
       zoom: true,
       scrollwheel: true,
       loaderControl: false,
       search:false,
       shareable: false
     },
+    style: {
+      marker: {
+        radius: 7,
+        fillColor: "#f05658",
+        color: "#ffffff",
+        weight: 1.5,
+        opacity: 0.9,
+        fillOpacity: 1
+      }
+    },
     vizjson: 'https://arce.cartodb.com/api/v2/viz/84c40c80-e5ef-11e4-a74b-0e853d047bba/viz.json'
   },
+
+  placeholder_template: "Why do you think I should go <%= place %><%= username %>?",
+
+  popup_template: '<div class="header"><h3><%= name %></h3></div><div class="Body"><div class="message"><div class="Spinner"></div><div class="success"></div></div><div class="comment"><img class="Avatar" src="<%= profile_image_url %>" /><%= comment %></div><textarea placeholder="<%= placeholder %>" name="name" rows="8" cols="40"></textarea><div class="Controls"><a href="#" class="Button js-add-place">Add this place</a></div></div><div class="footer"><%= address %></div>',
 
   initialize: function() {
 
@@ -28,9 +74,14 @@ var App = Backbone.View.extend({
       $("body").addClass("is--logged");
     }
 
-    $(".js-information-pane > div").html('<h3>Hello, ' + (username !== "anonymous" ? username : "stranger" ) + '!</h3><p>Thanks for helping me out with my Japan trip!<br /><br />Please, feel free to add some places you like using the search field up there. <span class="TwitterHelp">Also, if you connect this website with your Twitter account I\'ll know who to say thanks to.</span><br /><br />Best,<br /><a href="http://www.twitter.com/javier">Javier Arce</a></p> <a href="/login" class="Button">Login with Twitter</a>');
-    $('.js-information-pane').show().addClass('animated bounceInUp');
+    var information = new InformationPane({ username: username });
+    this.$el.append(information.render().$el);
 
+  },
+
+  _killEvent: function(e) {
+    e & e.preventDefault();
+    e & e.stopPropagation();
   },
 
   _setupModel: function() {
@@ -92,8 +143,7 @@ var App = Backbone.View.extend({
   },
 
   _onFeatureOver: function(e, latlng, pos, data, layer) {
-    e & e.preventDefault();
-    e & e.stopPropagation();
+    this._killEvent(e);
 
     if (this.model.get("selected") !== -1 && this.model.get("selected") !== data.cartodb_id) {
       this.model.set("selected", data.cartodb_id);
@@ -116,6 +166,7 @@ var App = Backbone.View.extend({
   },
 
   _onMapClick: function(e) {
+
     this.model.set("selected", -1);
     var coordinates = [e.latlng.lat, e.latlng.lng];
     var latlng = new google.maps.LatLng(coordinates[0], coordinates[1]);
@@ -125,6 +176,14 @@ var App = Backbone.View.extend({
     this.geocoder.geocode({ 'latLng': latlng }, function(results, status) {
       self._onFinishedGeocoding(coordinates, results, status);
     });
+  },
+
+  _getPlaceName: function(name) {
+    if (name) {
+      return name;
+    }
+
+    return _.shuffle(this.defaults.places)[0];
   },
 
   _getPopupContent: function(name, address, coordinates, opts, readonly) {
@@ -137,28 +196,19 @@ var App = Backbone.View.extend({
       profile_image_url = opts.profile_image_url || avatar;
     }
 
-    var placeholder = "Why do you think I should go " + (name !== null ? ("to " + name) : "here" ) + (username !== "anonymous" ? ", " + username : "" ) + "?";
+    var placeholder = _.template(this.placeholder_template, { place: (name !== null ? ("to " + name) : "here" ), username: (username !== "anonymous" ? ", " + username : "" ) });
 
-    var getPlaceName = function(name) {
-
-      if (name) {
-        return name;
-      }
-
-      var places = ["Unknown place", "Misterious place", "Misterious location", "Unkown spot"];
-      return _.shuffle(places)[0];
-
-    };
-
-    name = getPlaceName(name);
-
-    var content = '<div class="header"><h3>' + name + '</h3></div><div class="Body"><div class="message"><div class="Spinner"></div><div class="success"></div></div><div class="comment"><img class="Avatar" src="' + profile_image_url + '" /> ' + comment + '</div><textarea placeholder="' + placeholder +'" name="name" rows="8" cols="40"></textarea><div class="Controls"><a href="#" class="Button js-add-place">Add this place</a></div></div><div class="footer">' + address + '</div>';
-
-    var className = readonly ? "is--readonly" : "";
+    var content = _.template(this.popup_template, { 
+      name: this._getPlaceName(name),
+      profile_image_url: profile_image_url,
+      placeholder: placeholder,
+      address: address,
+      comment: comment 
+    });
 
     var options = {
       type: opts.type,
-      className: "Popup " + className,
+      className: "Popup " + (readonly ? "is--readonly" : ""),
       offset: new L.Point(0, 0)
     };
 
@@ -209,8 +259,7 @@ var App = Backbone.View.extend({
   },
 
   _onClickPlace: function(e, name, address, coordinates) {
-    e && e.preventDefault();
-    e && e.stopPropagation();
+    this._killEvent(e);
 
     var $el = $(this.popup._container);
     var data = { coordinates: coordinates, name: name, address: address, comment: $el.find("textarea").val() };
@@ -238,15 +287,7 @@ var App = Backbone.View.extend({
   },
 
   _addMarker: function(data) {
-    var geojsonMarkerOptions = {
-      radius: 7,
-      fillColor: "#f05658",
-      color: "#ffffff",
-      weight: 1.5,
-      opacity: 0.9,
-      fillOpacity: 1
-    };
-
+    var geojsonMarkerOptions = this.defaults.style.marker;
     var marker = L.circleMarker(data.coordinates, geojsonMarkerOptions);
     marker.addTo(this.map);
 
