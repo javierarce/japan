@@ -124,12 +124,18 @@ var CommentView = Backbone.View.extend({
 
 var InformationPane = Backbone.View.extend({
 
-  className: "InformationPane",
+  className: "InformationPane is--open",
 
-  template: '<div class="PaneContent"><h3>Hello, <%= username %>!</h3><p>As you may have heard, I\'m planning a trip to Japan in the end of May. What places should I visit? Where should I eat? What are the hidden secrets of this magical and crazy island? Please, feel free to add some places you like using the search field up there.<span class="TwitterHelp"><br /><br />Also, if you connect this website with your Twitter account I\'ll know who to say thanks to.</span><br /><br />どうもありがとう,<br /><a href="http://www.twitter.com/javier">Javier Arce</a></p> <a href="/login" class="Button">Connect with Twitter</a></div>', 
+  events: {
+    "click h3": "_onToggleClick"
+  },
+
+  template: '<div class="PaneContent"><h3>Hello, <%= username %>!<a href="#" class="ToggleButton js-toggle"></a></h3><p>As you may have heard, I\'m planning a trip to Japan at the end of May. It\'ll be my very first time there and my FOMO levels are skyrocketing. What places should I visit? Where should I eat? What are the hidden secrets of this magical and crazy island? Please, help me by adding some spots you like using the search field up there.<span class="TwitterHelp"><br /><br />Also, if you connect this website with your Twitter account I\'ll know who to say thanks to.</span><br /><br />どうもありがとう,<br /><a href="http://www.twitter.com/javier">Javier Arce</a></p> <a href="/login" class="Button">Connect with Twitter</a></div>',
 
   initialize: function(options) {
     this.options = options;
+    this.model = new Backbone.Model({ open: true });
+    this.model.on("change:open", this._onChangeOpen, this);
   },
 
   render: function() {
@@ -137,7 +143,30 @@ var InformationPane = Backbone.View.extend({
     this.$el.append(_.template(this.template, { username: username }));
     this.$el.show().addClass('animated bounceInUp');
 
+    this.$el.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+      $(this).removeClass("animated bounceInUp");
+    });
+
     return this;
+  },
+
+  _onChangeOpen: function() {
+    var self = this;
+    if (this.model.get("open")) {
+      this.$el.animate({ bottom: 0 }, { duration: 250, easing: "easeInQuad", complete: function(){
+        self.$el.addClass("is--open");
+      }});
+    } else {
+      this.$el.animate({ bottom: -335 }, { duration: 250, easing: "easeOutQuad", complete: function(){
+        self.$el.removeClass("is--open");
+      }});
+    }
+  },
+
+  _onToggleClick: function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    this.model.set("open", !this.model.get("open"));
   }
 });
 

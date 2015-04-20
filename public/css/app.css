@@ -1,22 +1,47 @@
 @-webkit-keyframes bounce-arrow{
-  0,100%{
+  0 {
+    opacity:0;
     -webkit-transform:translateX(0);
     transform:translateX(0);
     -webkit-animation-timing-function:cubic-bezier(0.215,0.61,0.355,1);
     animation-timing-function:cubic-bezier(0.215,0.61,0.355,1)
   }
-  50%{-webkit-transform:translateX(-6px);
+  50%{
+    -webkit-transform:translateX(-6px);
     transform:translateX(-6px);
     -webkit-animation-timing-function:cubic-bezier(0.55,0.055,0.675,0.19);
-  animation-timing-function:cubic-bezier(0.55,0.055,0.675,0.19)}
+    animation-timing-function:cubic-bezier(0.55,0.055,0.675,0.19)
+  }
+  100%{
+    opacity:0;
+    -webkit-transform:translateX(-6px);
+    transform:translateX(-6px);
+    -webkit-animation-timing-function:cubic-bezier(0.215,0.61,0.355,1);
+    animation-timing-function:cubic-bezier(0.215,0.61,0.355,1)
+  }
 }
 
 @keyframes bounce-arrow{
-  0,100%{-webkit-transform:translateX(0);
+  0 {
+  opacity:0;
+    -webkit-transform:translateX(0);
+    -webkit-transform:translateX(0);
     transform:translateX(0);
     -webkit-animation-timing-function:cubic-bezier(0.215,0.61,0.355,1);
   animation-timing-function:cubic-bezier(0.215,0.61,0.355,1)}
-50%{-webkit-transform:translateX(-6px);transform:translateX(-6px);-webkit-animation-timing-function:cubic-bezier(0.55,0.055,0.675,0.19);animation-timing-function:cubic-bezier(0.55,0.055,0.675,0.19)}}
+  50%{
+    -webkit-transform:translateX(-6px);
+    transform:translateX(-6px);
+    -webkit-animation-timing-function:cubic-bezier(0.55,0.055,0.675,0.19);
+    animation-timing-function:cubic-bezier(0.55,0.055,0.675,0.19)
+  }
+  100%{
+  opacity:0;
+    -webkit-transform:translateX(-6px);
+    transform:translateX(-6px);
+    -webkit-animation-timing-function:cubic-bezier(0.215,0.61,0.355,1);
+  animation-timing-function:cubic-bezier(0.215,0.61,0.355,1)}
+}
 
 /* http://meyerweb.com/eric/tools/css/reset/ 
 v2.0 | 20110126
@@ -288,16 +313,34 @@ License: none (public domain)
 
     .Spinner,.Spinner:after{width:30px;height:30px;border-radius:50%}@-webkit-keyframes load8{0%{-webkit-transform:rotate(0deg);-khtml-transform:rotate(0deg);-moz-transform:rotate(0deg);-ms-transform:rotate(0deg);-o-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg);-khtml-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}@-moz-keyframes load8{0%{-webkit-transform:rotate(0deg);-khtml-transform:rotate(0deg);-moz-transform:rotate(0deg);-ms-transform:rotate(0deg);-o-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg);-khtml-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}@-ms-keyframes load8{0%{-webkit-transform:rotate(0deg);-khtml-transform:rotate(0deg);-moz-transform:rotate(0deg);-ms-transform:rotate(0deg);-o-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg);-khtml-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}@-o-keyframes load8{0%{-webkit-transform:rotate(0deg);-khtml-transform:rotate(0deg);-moz-transform:rotate(0deg);-ms-transform:rotate(0deg);-o-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg);-khtml-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes load8{0%{-webkit-transform:rotate(0deg);-khtml-transform:rotate(0deg);-moz-transform:rotate(0deg);-ms-transform:rotate(0deg);-o-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg);-khtml-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}
 
+    .InformationPane.is--open .ToggleButton:after {
+      content: '—';
+    }
+    .InformationPane .ToggleButton:after {
+      content: '+';
+      color: #333;
+      position:relative;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .InformationPane .ToggleButton {
+      float: right;
+      color: #333;
+      text-decoration: none;
+      font-weight: normal;
+    }
+
     .InformationPane {
       position:absolute;
       left: 0px;
-      bottom: 0px;
+      bottom: 0;
       width: 350px;
-      padding: 15px 15px 30px 15px;
+      padding: 15px;
       -moz-box-sizing: border-box;
       box-sizing: border-box;
-      z-index: 100;
       display:none;
+      z-index: 1000000;
     }
     .InformationPane .PaneContent {
       border-radius: 2px;
