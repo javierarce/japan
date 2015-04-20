@@ -39,7 +39,8 @@ var CommentsView = Backbone.View.extend({
 var CommentView = Backbone.View.extend({
 
   events: {
-    "click": "_onMouseClick"
+    "click p": "_onMouseClick",
+    "click .footer": "_onMouseClick"
   },
 
   tagName: "li",
