@@ -45,13 +45,11 @@ var CommentsView = Backbone.View.extend({
   _onChangeOpen: function() {
     if (this.model.get("open")) {
       this.$el.find(".CommentItem").each(function(i, el) {
-        $(el).delay(150*i).animate({ opacity: 1 }, { duration: 250, easing: "easeInQuad" });
+        $(el).delay(150*i).animate({ opacity: 1 }, { duration: 150, easing: "easeInQuad" });
       });
       this.$el.animate({ right: 0 }, { duration: 150, easing: "easeInQuad" });
     } else {
-      this.$el.find(".CommentItem").each(function(i, el) {
-        $(el).delay(150*i).animate({ opacity: 0 }, { duration: 250, easing: "easeInQuad" });
-      });
+      this.$el.find(".CommentItem").animate({ opacity: 0 }, { duration: 150, easing: "easeInQuad" });
       this.$el.animate({ right: -250}, { duration: 150, easing: "easeOutQuad" });
     }
   },
