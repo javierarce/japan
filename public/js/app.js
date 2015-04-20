@@ -117,7 +117,7 @@ var App = Backbone.View.extend({
   _onMapClick: function(e) {
     this.model.set("selected", -1);
     var coordinates = [e.latlng.lat, e.latlng.lng];
-    var latlng = new google.maps.LatLng(coordinates);
+    var latlng = new google.maps.LatLng(coordinates[0], coordinates[1]);
 
     var self = this;
     this.geocoder.geocode({ 'latLng': latlng }, function(results, status) {
