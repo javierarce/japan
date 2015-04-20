@@ -11,11 +11,10 @@ var crypto         = require('crypto');
 var everyauth      = require('everyauth');
 var consolidate    = require('consolidate');
 var fs             = require('fs');
-var request = require('request');
-
+var request        = require('request');
 var Config         = require("./lib/config").Config;
 var CartoDB        = require('cartodb');
-//var Firebase       = require("firebase");
+//var Firebase     = require("firebase");
 
 var app = express();
 
@@ -54,13 +53,15 @@ cartoDB = new CartoDB({
   api_key: Config.cartoDB_API_KEY
 });
 
-//cartoDBLog = require("fs").createWriteStream(__dirname + "/log/responses.log");
-//cartoDB.pipe(cartoDBLog);
+if (process.env.NODE_ENV === "development") {
+  cartoDBLog = require("fs").createWriteStream(__dirname + "/log/responses.log");
+  cartoDB.pipe(cartoDBLog);
+}
+
 cartoDB.connect();
 cartoDB.on("connect", function() {
   return console.log("connected");
 });
-
 
 // =============================
 // Helpers
