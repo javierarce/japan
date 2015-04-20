@@ -64,15 +64,15 @@ var CommentsView = Backbone.View.extend({
 var CommentView = Backbone.View.extend({
 
   events: {
-    "click p": "_onMouseClick",
-    "click .footer": "_onMouseClick"
+    "click": "_onMouseClick",
+    "click .js-avaar": "_onAvatarClick"
   },
 
   tagName: "li",
 
   className: "CommentItem",
 
-  template: '<div class="Body"><div class="comment"><a href="http://twitter.com/<%= screen_name %>"><img class="Avatar" src="<%= profile_image_url %>" /></a><p><% if (name) { %><strong><%= name %></strong>: <% } %><%= comment %></p></div></div><div class="footer"><%= description %></div>',
+  template: '<div class="Body"><div class="comment"><a href="http://twitter.com/<%= screen_name %>"><img class="Avatar js-avatar" src="<%= profile_image_url %>" /></a><p><% if (name) { %><strong><%= name %></strong>: <% } %><%= comment %></p></div></div><div class="footer"><%= description %></div>',
 
   initialize: function() {
   },
@@ -87,9 +87,18 @@ var CommentView = Backbone.View.extend({
   _onMouseClick: function(e) {
     e.preventDefault();
     e.stopPropagation();
+
     var coordinates = [this.model.get("latitude"), this.model.get("longitude")];
     app.map.panTo(coordinates);
-    app.map.setZoom(15);
+
+    setTimeout(function() {
+      app.map.setZoom(17);
+    }, 150)
+  },
+
+  _onAvatarClick: function(e) {
+    e.preventDefault();
+    e.stopPropagation();
   }
 });
 
@@ -97,7 +106,7 @@ var InformationPane = Backbone.View.extend({
 
   className: "InformationPane",
 
-  template: '<div class="PaneContent"><h3>Hello, <%= username %>!</h3><p>Thanks for helping me out with my Japan trip!<br /><br />Please, feel free to add some places you like using the search field up there. <span class="TwitterHelp">Also, if you connect this website with your Twitter account I\'ll know who to say thanks to.</span><br /><br />Best,<br /><a href="http://www.twitter.com/javier">Javier Arce</a></p> <a href="/login" class="Button">Login with Twitter</a></div>', 
+  template: '<div class="PaneContent"><h3>Hello, <%= username %>!</h3><p>As you may have heard, I\'m planning a trip to Japan in the end of May. What places should I visit? Where should I eat? What are the hidden secrets of this magical and crazy island? Please, feel free to add some places you like using the search field up there.<span class="TwitterHelp"><br /><br />Also, if you connect this website with your Twitter account I\'ll know who to say thanks to.</span><br /><br />どうもありがとう,<br /><a href="http://www.twitter.com/javier">Javier Arce</a></p> <a href="/login" class="Button">Login with Twitter</a></div>', 
 
   initialize: function(options) {
     this.options = options;
