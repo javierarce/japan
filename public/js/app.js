@@ -66,6 +66,11 @@ var App = Backbone.View.extend({
 
   },
 
+  _killEvent: function(e) {
+    e & e.preventDefault();
+    e & e.stopPropagation();
+  },
+
   _setupModel: function() {
     this.model = new Backbone.Model({ 
       selected: null
@@ -125,8 +130,7 @@ var App = Backbone.View.extend({
   },
 
   _onFeatureOver: function(e, latlng, pos, data, layer) {
-    e & e.preventDefault();
-    e & e.stopPropagation();
+    this._killEvent(e);
 
     if (this.model.get("selected") !== -1 && this.model.get("selected") !== data.cartodb_id) {
       this.model.set("selected", data.cartodb_id);
@@ -149,6 +153,7 @@ var App = Backbone.View.extend({
   },
 
   _onMapClick: function(e) {
+
     this.model.set("selected", -1);
     var coordinates = [e.latlng.lat, e.latlng.lng];
     var latlng = new google.maps.LatLng(coordinates[0], coordinates[1]);
@@ -241,8 +246,7 @@ var App = Backbone.View.extend({
   },
 
   _onClickPlace: function(e, name, address, coordinates) {
-    e && e.preventDefault();
-    e && e.stopPropagation();
+    this._killEvent(e);
 
     var $el = $(this.popup._container);
     var data = { coordinates: coordinates, name: name, address: address, comment: $el.find("textarea").val() };
