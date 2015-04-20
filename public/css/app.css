@@ -103,7 +103,7 @@ h3 {
   position: relative;
   min-width: 300px;
   border-bottom: 1px solid #f1f1f1;
-  word-break: break-all;
+  word-break: break-word;
 }
 .Popup .Body .Controls {
   padding: 10px 10px;
