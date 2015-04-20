@@ -2,11 +2,22 @@ var App = Backbone.View.extend({
 
   defaults: {
     mapOptions: {
+      https: true,
       zoom: true,
       scrollwheel: true,
       loaderControl: false,
       search:false,
       shareable: false
+    },
+    style: {
+      marker: {
+        radius: 7,
+        fillColor: "#f05658",
+        color: "#ffffff",
+        weight: 1.5,
+        opacity: 0.9,
+        fillOpacity: 1
+      }
     },
     vizjson: 'https://arce.cartodb.com/api/v2/viz/84c40c80-e5ef-11e4-a74b-0e853d047bba/viz.json'
   },
@@ -236,15 +247,7 @@ var App = Backbone.View.extend({
   },
 
   _addMarker: function(data) {
-    var geojsonMarkerOptions = {
-      radius: 7,
-      fillColor: "#f05658",
-      color: "#ffffff",
-      weight: 1.5,
-      opacity: 0.9,
-      fillOpacity: 1
-    };
-
+    var geojsonMarkerOptions = this.defaults.style.marker;
     var marker = L.circleMarker(data.coordinates, geojsonMarkerOptions);
     marker.addTo(this.map);
 
