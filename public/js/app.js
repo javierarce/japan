@@ -2,21 +2,20 @@ var InformationPane = Backbone.View.extend({
 
   className: "InformationPane",
 
-  template: '<div class="PaneContent"><%= content %></div>',
+  template: '<div class="PaneContent"><h3>Hello, <%= username %>!</h3><p>Thanks for helping me out with my Japan trip!<br /><br />Please, feel free to add some places you like using the search field up there. <span class="TwitterHelp">Also, if you connect this website with your Twitter account I\'ll know who to say thanks to.</span><br /><br />Best,<br /><a href="http://www.twitter.com/javier">Javier Arce</a></p> <a href="/login" class="Button">Login with Twitter</a></div>', 
 
-  initialize: function() {
-
+  initialize: function(options) {
+    this.options = options;
   },
 
   render: function() {
+    var username = this.options.username !== "anonymous" ? this.options.username : "stranger";
 
-    var content = '<h3>Hello, ' + (username !== "anonymous" ? username : "stranger" ) + '!</h3><p>Thanks for helping me out with my Japan trip!<br /><br />Please, feel free to add some places you like using the search field up there. <span class="TwitterHelp">Also, if you connect this website with your Twitter account I\'ll know who to say thanks to.</span><br /><br />Best,<br /><a href="http://www.twitter.com/javier">Javier Arce</a></p> <a href="/login" class="Button">Login with Twitter</a>';
-
-    this.$el.append(_.template(this.template, { content: content }));
+    this.$el.append(_.template(this.template, { username: username }));
 
     this.$el.show().addClass('animated bounceInUp');
-    return this;
 
+    return this;
   }
 });
 
@@ -62,7 +61,7 @@ var App = Backbone.View.extend({
       $("body").addClass("is--logged");
     }
 
-    var information = new InformationPane();
+    var information = new InformationPane({ username: username });
     this.$el.append(information.render().$el);
 
   },
