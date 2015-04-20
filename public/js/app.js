@@ -11,7 +11,7 @@ var Comments = Backbone.Collection.extend({
 
 var CommentsView = Backbone.View.extend({
 
-  className: "CommentsPane",
+  className: "CommentsPane is--first-time",
 
   events: {
     "click .js-toggle": "_onToggleClick"
@@ -51,6 +51,7 @@ var CommentsView = Backbone.View.extend({
       });
       this.$el.animate({ right: 0 }, { duration: 150, easing: "easeInQuad", complete: function(){
         self.$el.addClass("is--open");
+        self.$el.removeClass("is--first-time");
       }});
     } else {
       this.$el.find(".CommentItem").animate({ opacity: 0 }, { duration: 150, easing: "easeInQuad", complete: function() {
