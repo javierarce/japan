@@ -3,7 +3,7 @@ var Comment = Backbone.Model.extend({
 
 var Comments = Backbone.Collection.extend({
   model: Comment,
-  url: "https://arce.cartodb.com/api/v2/sql?q=SELECT *, ST_X(ST_Centroid(the_geom)) as longitude,ST_Y(ST_Centroid(the_geom)) as latitude FROM jp",
+  url: "https://arce.cartodb.com/api/v2/sql?q=SELECT *, ST_X(ST_Centroid(the_geom)) as longitude,ST_Y(ST_Centroid(the_geom)) as latitude FROM jp ORDER BY created_at DESC",
   parse: function(response) {
     return response.rows;
   }
@@ -13,12 +13,18 @@ var CommentsView = Backbone.View.extend({
 
   className: "CommentsPane",
 
-  template: '<ul class="CommentList"></ul>',
+  events: {
+    "click .js-toggle": "_onToggleClick"
+  },
+
+  template: '<a href="#" class="ToggleButton js-toggle"></a><div class="CommentsInnerContent"><ul class="CommentList"></ul></div>',
 
   initialize: function() {
     this.comments = new Comments();
     this.comments.bind("reset", this.render, this);
     this.comments.fetch();
+    this.model = new Backbone.Model({ open: false });
+    this.model.on("change:open", this._onChangeOpen, this);
   },
 
   render: function() {
@@ -31,12 +37,30 @@ var CommentsView = Backbone.View.extend({
       var view = new CommentView({ model: comment })
       i = i+1;
       self.$el.find("ul").append(view.render().$el);
-      view.$el.delay(150*i).animate({ opacity: 1 }, { duration: 250, easing: "easeInQuad" });
     });
 
     return this;
-  }
+  },
 
+  _onChangeOpen: function() {
+    if (this.model.get("open")) {
+      this.$el.find(".CommentItem").each(function(i, el) {
+        $(el).delay(150*i).animate({ opacity: 1 }, { duration: 250, easing: "easeInQuad" });
+      });
+      this.$el.animate({ right: 0 }, { duration: 150, easing: "easeInQuad" });
+    } else {
+      this.$el.find(".CommentItem").each(function(i, el) {
+        $(el).delay(150*i).animate({ opacity: 0 }, { duration: 250, easing: "easeInQuad" });
+      });
+      this.$el.animate({ right: -250}, { duration: 150, easing: "easeOutQuad" });
+    }
+  },
+
+  _onToggleClick: function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    this.model.set("open", !this.model.get("open"));
+  }
 });
 
 var CommentView = Backbone.View.extend({
@@ -50,7 +74,7 @@ var CommentView = Backbone.View.extend({
 
   className: "CommentItem",
 
-  template: '<div class="header"><h3><%= name %></h3></div><div class="Body"><div class="comment"><a href="http://twitter.com/<%= screen_name %>"><img class="Avatar" src="<%= profile_image_url %>" /></a><p><%= comment %></p></div></div><div class="footer"><%= description %></div>',
+  template: '<div class="Body"><div class="comment"><a href="http://twitter.com/<%= screen_name %>"><img class="Avatar" src="<%= profile_image_url %>" /></a><p><% if (name) { %><strong><%= name %></strong>: <% } %><%= comment %></p></div></div><div class="footer"><%= description %></div>',
 
   initialize: function() {
   },
@@ -83,9 +107,7 @@ var InformationPane = Backbone.View.extend({
 
   render: function() {
     var username = this.options.username !== "anonymous" ? this.options.username : "stranger";
-
     this.$el.append(_.template(this.template, { username: username }));
-
     this.$el.show().addClass('animated bounceInUp');
 
     return this;

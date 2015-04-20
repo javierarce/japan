@@ -323,22 +323,31 @@ textarea {
   margin: 0;
 }
 
+.CommentsPane .ToggleButton {
+  width: 30px;
+  height: 30px;
+  position:absolute;
+  top: 50%;
+  left: -30px;
+  margin-top: -15px;
+  background: #F05658;
+}
+.CommentsPane .CommentsInnerContent {
+  width: 100%;
+  height: 100%;
+  overflow:hidden;
+  overflow-y: scroll;
+}
 .CommentsPane {
   position:absolute;
-  right: 0;
+  right: -250px;
   top: 0;
   height: 100%;
   width: 250px;
   clear:both;
-  overflow:hidden;
   padding: 10px;
-  z-index: 10;
   box-sizing: border-box;
-  background:rgba(255,255,255, .2);
-  overflow-y: scroll;
-}
-
-.CommentsList {
+  z-index: 100;
 }
 
 .CommentItem {
@@ -376,10 +385,8 @@ textarea {
 
 .CommentItem .Body .Avatar {
 }
-.CommentItem h3 {
-  display:none;
-}
-.CommentItem .Body p {
+.CommentItem .Body strong {
+  font-weight:bold;
 }
 .CommentItem .footer {
   position: relative;
