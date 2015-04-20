@@ -32,6 +32,7 @@ var App = Backbone.View.extend({
   el: "body",
 
   defaults: {
+    places: ["Unknown place", "Misterious place", "Misterious location", "Unkown spot"],
     mapOptions: {
       https: true,
       zoom: true,
@@ -52,6 +53,10 @@ var App = Backbone.View.extend({
     },
     vizjson: 'https://arce.cartodb.com/api/v2/viz/84c40c80-e5ef-11e4-a74b-0e853d047bba/viz.json'
   },
+
+  placeholder_template: "Why do you think I should go <%= place %><%= username %>?",
+
+  popup_template: '<div class="header"><h3><%= name %></h3></div><div class="Body"><div class="message"><div class="Spinner"></div><div class="success"></div></div><div class="comment"><img class="Avatar" src="<%= profile_image_url %>" /><%= comment %></div><textarea placeholder="<%= placeholder %>" name="name" rows="8" cols="40"></textarea><div class="Controls"><a href="#" class="Button js-add-place">Add this place</a></div></div><div class="footer"><%= address %></div>',
 
   initialize: function() {
 
@@ -172,6 +177,14 @@ var App = Backbone.View.extend({
     });
   },
 
+  _getPlaceName: function(name) {
+    if (name) {
+      return name;
+    }
+
+    return _.shuffle(this.defaults.places)[0];
+  },
+
   _getPopupContent: function(name, address, coordinates, opts, readonly) {
 
     var comment = "";
@@ -182,30 +195,19 @@ var App = Backbone.View.extend({
       profile_image_url = opts.profile_image_url || avatar;
     }
 
-    var placeholder = "Why do you think I should go " + (name !== null ? ("to " + name) : "here" ) + (username !== "anonymous" ? ", " + username : "" ) + "?";
+    var placeholder = _.template(this.placeholder_template, { place: (name !== null ? ("to " + name) : "here" ), username: (username !== "anonymous" ? ", " + username : "" ) });
 
-    var getPlaceName = function(name) {
-
-      if (name) {
-        return name;
-      }
-
-      var places = ["Unknown place", "Misterious place", "Misterious location", "Unkown spot"];
-      return _.shuffle(places)[0];
-
-    };
-
-    name = getPlaceName(name);
-
-    var template = '<div class="header"><h3><%= name %></h3></div><div class="Body"><div class="message"><div class="Spinner"></div><div class="success"></div></div><div class="comment"><img class="Avatar" src="<%= profile_image_url %>" /><%= comment %></div><textarea placeholder="<%= placeholder %>" name="name" rows="8" cols="40"></textarea><div class="Controls"><a href="#" class="Button js-add-place">Add this place</a></div></div><div class="footer"><%= address %></div>';
-
-    var content = _.template(template, { name: name, profile_image_url: profile_image_url, placeholder: placeholder, address: address, comment: comment });
-
-    var className = readonly ? "is--readonly" : "";
+    var content = _.template(this.popup_template, { 
+      name: this._getPlaceName(name),
+      profile_image_url: profile_image_url,
+      placeholder: placeholder,
+      address: address,
+      comment: comment 
+    });
 
     var options = {
       type: opts.type,
-      className: "Popup " + className,
+      className: "Popup " + (readonly ? "is--readonly" : ""),
       offset: new L.Point(0, 0)
     };
 
