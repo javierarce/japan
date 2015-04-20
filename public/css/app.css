@@ -96,13 +96,12 @@ License: none (public domain)
       text-overflow: ellipsis;
     }
 
-    .Popup .comment {
+    .Popup .Comment {
       display:none;
       padding: 10px 10px;
       min-height: 30px;
     }
-
-    .Popup .message {
+    .Popup .Message {
       display:none;
       position:absolute;
       width: 100%;
@@ -114,7 +113,7 @@ License: none (public domain)
       box-sizing: border-box;
       overflow:hidden;
     }
-    .Popup .message .success {
+    .Popup .Message .success {
       position:relative;
       top: 300px;
       width: 100%;
@@ -135,14 +134,13 @@ License: none (public domain)
     .Popup .Body .Controls .Button {
       color: #fff;
     }
-    .Popup.is--readonly .comment { display: block; }
+    .Popup.is--readonly .Comment { display: block; }
     .Popup.is--readonly textarea { display: none; }
     .Popup.is--readonly .Controls { display: none; }
     .Popup.is--readonly.leaflet-popup .leaflet-popup-close-button {
       display:none;
     }
-
-    .Popup .header {
+    .Popup .Header {
       padding: 10px;
       border-bottom: 1px solid #f1f1f1;
       border-radius: 3px 3px 0 0;
@@ -150,12 +148,11 @@ License: none (public domain)
       background: -webkit-linear-gradient(108deg, #70d0ee, #2a84d2 90%);
       color: #fff;
     }
-
-    .Popup .footer {
+    .Popup .Footer {
       position: relative;
-      font-size: 12px;
+      font-size: 11px;
       color: #666;
-      padding: 10px;
+      padding: 7px 10px;
       width: 100%;
       white-space: nowrap;
       overflow: hidden;
@@ -352,7 +349,6 @@ License: none (public domain)
     .CommentsPane.has--loaded .ToggleButton{
       display: block;
     }
-
     .CommentsPane .ToggleButton {
       display:none;
       width: 30px;
@@ -402,7 +398,6 @@ License: none (public domain)
       box-sizing: border-box;
       z-index: 100;
     }
-
     .CommentItem {
       display:none;
       font-size: 10px;
@@ -434,13 +429,13 @@ License: none (public domain)
     .CommentItem .Body {
       font-size: 13px;
     }
-    .CommentItem p {
-      word-break: break-word;
-    }
     .CommentItem .Body strong {
       font-weight:bold;
     }
-    .CommentItem .footer {
+    .CommentItem p {
+      word-break: break-word;
+    }
+    .CommentItem .Footer {
       position: relative;
       font-size: 12px;
       color: #666;

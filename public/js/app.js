@@ -92,7 +92,7 @@ var CommentView = Backbone.View.extend({
 
   className: "CommentItem",
 
-  template: '<div class="Body"><div class="comment"><a href="http://twitter.com/<%= screen_name %>"><img class="Avatar js-avatar" src="<%= profile_image_url %>" /></a><p><% if (name) { %><strong><%= name %></strong>: <% } %><%= comment %></p></div></div><div class="footer"><%= description %></div>',
+  template: '<div class="Body"><div class="comment"><a href="http://twitter.com/<%= screen_name %>"><img class="Avatar js-avatar" src="<%= profile_image_url %>" /></a><p><% if (name) { %><strong><%= name %></strong>: <% } %><%= comment %></p></div></div><div class="Footer"><%= description %></div>',
 
   initialize: function() {
   },
@@ -170,7 +170,7 @@ var App = Backbone.View.extend({
 
   placeholder_template: "Why do you think I should go <%= place %><%= username %>?",
 
-  popup_template: '<div class="header"><h3><%= name %></h3></div><div class="Body"><div class="message"><div class="Spinner"></div><div class="success"></div></div><div class="comment"><img class="Avatar" src="<%= profile_image_url %>" /><%= comment %></div><textarea placeholder="<%= placeholder %>" name="name" rows="8" cols="40"></textarea><div class="Controls"><a href="#" class="Button js-add-place">Add this place</a></div></div><div class="footer"><%= address %></div>',
+  popup_template: '<div class="Header"><h3><%= name %></h3></div><div class="Body"><div class="Message"><div class="Spinner"></div><div class="success"></div></div><div class="Comment"><img class="Avatar" src="<%= profile_image_url %>" /><%= comment %></div><textarea placeholder="<%= placeholder %>" name="name" rows="8" cols="40"></textarea><div class="Controls"><a href="#" class="Button js-add-place">Add this place</a></div></div><div class="Footer"><%= address %></div>',
 
   initialize: function() {
 
@@ -405,7 +405,7 @@ var App = Backbone.View.extend({
     }
 
     var self = this;
-    $el.find(".message").fadeIn(150);
+    $el.find(".Message").fadeIn(150);
     $.ajax({ url: "/place", data: JSON.stringify(data), type: "POST", contentType: "application/json", dataType: "json" }).done(function() {
       $el.find(".message .success").animate({ top: 0 }, { duration: 100, easing: "easeOutQuad" });
       self._addMarker(data);
