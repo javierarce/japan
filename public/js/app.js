@@ -1,4 +1,28 @@
+var InformationPane = Backbone.View.extend({
+
+  className: "InformationPane",
+
+  template: '<div class="PaneContent"><%= content %></div>',
+
+  initialize: function() {
+
+  },
+
+  render: function() {
+
+    var content = '<h3>Hello, ' + (username !== "anonymous" ? username : "stranger" ) + '!</h3><p>Thanks for helping me out with my Japan trip!<br /><br />Please, feel free to add some places you like using the search field up there. <span class="TwitterHelp">Also, if you connect this website with your Twitter account I\'ll know who to say thanks to.</span><br /><br />Best,<br /><a href="http://www.twitter.com/javier">Javier Arce</a></p> <a href="/login" class="Button">Login with Twitter</a>';
+
+    this.$el.append(_.template(this.template, { content: content }));
+
+    this.$el.show().addClass('animated bounceInUp');
+    return this;
+
+  }
+});
+
 var App = Backbone.View.extend({
+
+  el: "body",
 
   defaults: {
     mapOptions: {
@@ -38,8 +62,8 @@ var App = Backbone.View.extend({
       $("body").addClass("is--logged");
     }
 
-    $(".js-information-pane > div").html('<h3>Hello, ' + (username !== "anonymous" ? username : "stranger" ) + '!</h3><p>Thanks for helping me out with my Japan trip!<br /><br />Please, feel free to add some places you like using the search field up there. <span class="TwitterHelp">Also, if you connect this website with your Twitter account I\'ll know who to say thanks to.</span><br /><br />Best,<br /><a href="http://www.twitter.com/javier">Javier Arce</a></p> <a href="/login" class="Button">Login with Twitter</a>');
-    $('.js-information-pane').show().addClass('animated bounceInUp');
+    var information = new InformationPane();
+    this.$el.append(information.render().$el);
 
   },
 
