@@ -2,6 +2,7 @@ var App = Backbone.View.extend({
 
   defaults: {
     mapOptions: {
+      https:true,
       zoom: true,
       scrollwheel: true,
       loaderControl: false,
