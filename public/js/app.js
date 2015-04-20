@@ -21,24 +21,30 @@ var CommentsView = Backbone.View.extend({
 
   initialize: function() {
     this.comments = new Comments();
-    this.comments.bind("reset", this.render, this);
+    this.comments.bind("reset", this._onLoadComments, this);
     this.comments.fetch();
     this.model = new Backbone.Model({ open: false });
     this.model.on("change:open", this._onChangeOpen, this);
   },
 
-  render: function() {
+  _onLoadComments: function() {
+    this.$el.addClass("has--loaded");
+    this.render();
+  },
+
+  _renderComments: function() {
     var self = this;
-
-    this.$el.html(_.template(this.template));
-
     i = 0;
     this.comments.each(function(comment) {
       var view = new CommentView({ model: comment })
       i = i+1;
       self.$el.find("ul").append(view.render().$el);
     });
+  },
 
+  render: function() {
+    this.$el.html(_.template(this.template));
+    this._renderComments();
     return this;
   },
 
@@ -46,18 +52,25 @@ var CommentsView = Backbone.View.extend({
     var self = this;
 
     if (this.model.get("open")) {
-      this.$el.find(".CommentItem").each(function(i, el) {
-        $(el).delay(150*i).animate({ opacity: 1 }, { duration: 150, easing: "easeInQuad" });
-      });
+
+      if (this.$el.hasClass("is--first-time")) {
+        this.$el.find(".CommentItem").each(function(i, el) {
+          if (i > 10) i = 10;
+          $(el).delay(150*i).queue(function(now){
+            $(this).show().addClass('animated-fast fadeInUp');
+            now();
+          });
+        });
+      }
+
       this.$el.animate({ right: 0 }, { duration: 150, easing: "easeInQuad", complete: function(){
         self.$el.addClass("is--open");
         self.$el.removeClass("is--first-time");
       }});
     } else {
-      this.$el.find(".CommentItem").animate({ opacity: 0 }, { duration: 150, easing: "easeInQuad", complete: function() {
+      this.$el.animate({ right: -250}, { duration: 150, easing: "easeOutQuad", complete: function() {
         self.$el.removeClass("is--open");
       }});
-      this.$el.animate({ right: -250}, { duration: 150, easing: "easeOutQuad" });
     }
   },
 
