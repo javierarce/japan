@@ -342,10 +342,10 @@ textarea {
 }
 
 .CommentItem {
+  opacity: 0;
   display: inline-block;
   font-size: 10px;
   vertical-align: top;
-  display:none;
   margin: 0 0 8px 0;
   width: 100%;
   padding: 7px;

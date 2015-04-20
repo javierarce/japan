@@ -31,10 +31,7 @@ var CommentsView = Backbone.View.extend({
       var view = new CommentView({ model: comment })
       i = i+1;
       self.$el.find("ul").append(view.render().$el);
-      view.$el.delay(250*i).queue(function(next) {
-      $(this).show().addClass('animated bounceInRight');
-      next();
-      });
+      view.$el.delay(150*i).animate({ opacity: 1 }, { duration: 250, easing: "easeInQuad" });
     });
 
     return this;
