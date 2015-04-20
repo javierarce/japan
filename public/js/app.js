@@ -120,7 +120,9 @@ var App = Backbone.View.extend({
     var latlng = new google.maps.LatLng(coordinates);
 
     var self = this;
+
     this.geocoder.geocode({ 'latLng': latlng }, function(results, status) {
+      console.log(latlng, coordinates, results)
       self._onFinishedGeocoding(coordinates, results, status);
     });
   },
