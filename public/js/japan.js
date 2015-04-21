@@ -231,7 +231,7 @@ var App = Backbone.View.extend({
   el: "body",
 
   defaults: {
-    places: ["Unknown place", "Misterious place", "Misterious location", "Unkown spot"],
+    places: ["Unknown place", "Misterious place", "Misterious location", "Unkown spot", "Uncharted spot", "Unexplored location", "Unnamed location", "Exotic place"],
     mapOptions: {
       https: true,
       zoom: true,
