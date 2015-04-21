@@ -11,7 +11,6 @@ var InputField = Backbone.View.extend({
 
   initialize: function(options) {
     this.options = options;
-    this.map = this.options.map;
   },
 
   render: function() {
@@ -22,14 +21,7 @@ var InputField = Backbone.View.extend({
   _onCenterButtonClick: function(e) {
     e & e.preventDefault();
     e & e.stopPropagation();
-
-    var self = this;
-
-    this.map.setZoom(7);
-
-    setTimeout(function() {
-      self.map.panTo([36.1733569352216, 137.757568359375]);
-    }, 250);
+    this.trigger("onCenterButtonClick", this)
   },
 
   _onSearchClick: function(e) {
@@ -269,11 +261,38 @@ var App = Backbone.View.extend({
       $("body").addClass("is--logged");
     }
 
+    this._renderInputField();
+    this._renderInformationPane();
+    this._renderComments();
+  },
+
+  _renderInformationPane: function() {
     this.informationPane = new InformationPane({ username: username });
     this.$el.append(this.informationPane.render().$el);
+  },
 
+  _renderComments: function() {
     this.comments = new CommentsView();
     this.$el.append(this.comments.render().$el);
+  },
+
+  _renderInputField: function() {
+    this.searchField = new InputField();
+    this.searchField.bind("onSearchClick", this._closeInformationPane, this);
+    this.searchField.bind("onCenterButtonClick", this._centerMap, this);
+    this.$el.append(this.searchField.render().$el);
+  },
+
+  _closeInformationPane: function() {
+    this.informationPane.close();
+  },
+
+  _centerMap: function() {
+    var self = this;
+    this.map.setZoom(7);
+    setTimeout(function() {
+      self.map.panTo([36.1733569352216, 137.757568359375]);
+    }, 250);
 
   },
 
@@ -313,14 +332,6 @@ var App = Backbone.View.extend({
     layer.on('featureOut',   this._onFeatureOut);
     layer.on('featureOver',  this._onFeatureOver);
     layer.on('featureClick', this._onFeatureClick);
-
-    var self = this;
-
-    this.searchField = new InputField({ map: this.map });
-    this.searchField.bind("onSearchClick", function() {
-      self.informationPane.close();
-    })
-    this.$el.append(this.searchField.render().$el);
 
     this.autocomplete = new google.maps.places.Autocomplete(this.searchField.$("input")[0], {
       componentRestrictions: { country: "jp" }
@@ -453,7 +464,6 @@ var App = Backbone.View.extend({
       var coordinates = [place.geometry.location.lat(), place.geometry.location.lng()];
       this._goToCoordinates(coordinates);
 
-      console.log(place)
       var self = this;
       setTimeout(function() {
         self._openPopup(place.name, place.formatted_address, coordinates, { type: 1 });
