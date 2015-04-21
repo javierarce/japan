@@ -125,7 +125,7 @@ var CommentView = Backbone.View.extend({
 
 var InformationPane = Backbone.View.extend({
 
-  className: "InformationPane is--open",
+  className: "InformationPane",
 
   events: {
     "click .js-close": "_onCloseClick",
@@ -136,18 +136,17 @@ var InformationPane = Backbone.View.extend({
 
   initialize: function(options) {
     this.options = options;
-    this.model = new Backbone.Model({ open: true });
+    this.model = new Backbone.Model({ open: this.options.username === "anonymous" ? true : false });
     this.model.on("change:open", this._onChangeOpen, this);
   },
 
   render: function() {
     var username = this.options.username !== "anonymous" ? this.options.username : "stranger";
     this.$el.append(_.template(this.template, { username: username }));
-    this.$el.find(".InformationPaneInner").delay(550).fadeIn(250);
 
-    //this.$el.find(".InformationPaneInner").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
-      //$(this).removeClass("animated-fast fadeInDown");
-    //});
+    if (this.model.get("open")) {
+      this.$el.find(".InformationPaneInner").delay(550).fadeIn(250);
+    }
 
     return this;
   },
@@ -240,6 +239,7 @@ var App = Backbone.View.extend({
 
     this.informationPane = new InformationPane({ username: username });
     this.$el.append(this.informationPane.render().$el);
+
     this.comments = new CommentsView();
     this.$el.append(this.comments.render().$el);
 
