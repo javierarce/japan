@@ -250,9 +250,6 @@ textarea {
   padding: 15px;
   @include box-sizing(border-box);
 }
-.InformationPane .help:hover {
-  background:#2477BE;
-}
 .InformationPane .help {
   background: #2a84d2;
   color: #fff;
@@ -270,6 +267,9 @@ textarea {
   padding: 10px;
   line-height: 10px;
   @include box-sizing(border-box);
+}
+.InformationPane .help:hover {
+  background:#2477BE;
 }
 .InformationPane .tip-container {
   margin: 0 auto;
