@@ -364,6 +364,8 @@ var App = Backbone.View.extend({
 
     this.map.on('click', this._onMapClick);
 
+    this._setupLocalStorage();
+
     sublayer.setInteractivity('cartodb_id, name, description, comment, latitude, longitude, profile_image_url, screen_name');
 
     var subLayerOptions = {
@@ -384,6 +386,23 @@ var App = Backbone.View.extend({
     google.maps.event.addListener(this.autocomplete, 'place_changed', this._onPlaceChange);
 
     this.geocoder = new google.maps.Geocoder();
+  },
+
+  _setupLocalStorage: function() {
+
+    if (!localStorage) return;
+
+    var storedPosition = localStorage.getItem("japan_trip");
+
+    if (storedPosition) {
+      var position = JSON.parse(storedPosition);
+      this._goTo(position.zoom, [position.lat, position.lng]);
+    }
+
+    this.map.on('moveend', function(e) {
+      localStorage.setItem("japan_trip", JSON.stringify( { zoom: e.target.getZoom(), lat: e.target.getCenter().lat, lng: e.target.getCenter().lng } ))
+    });
+
   },
 
   _onFeatureOut: function(e, latlng, pos, data, layer) {
@@ -573,6 +592,16 @@ var App = Backbone.View.extend({
 
     var content = this._getPopupContent(data.name, data.address, data.coordinates, { type: 2, comment: data.comment, profile_image_url: avatar, screen_name: username }, true)
     marker.bindPopup(content.content, content.options)
+  },
+
+  _goTo: function(zoom, coordinates) {
+    var self = this;
+
+    this.map.setZoom(zoom);
+
+    setTimeout(function() {
+      self.map.panTo(coordinates);
+    }, 250);
   },
 
   _goToCoordinates: function(coordinates) {
