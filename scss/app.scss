@@ -1,0 +1,504 @@
+.animated-fast {
+  -webkit-animation-duration: 500ms;
+  animation-duration: 500ms;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+@-webkit-keyframes bounce-arrow{
+  0% {
+    opacity:0;
+    -webkit-transform:translateX(0);
+    transform:translateX(0);
+    -webkit-animation-timing-function:cubic-bezier(0.215,0.61,0.355,1);
+    animation-timing-function:cubic-bezier(0.215,0.61,0.355,1)
+  }
+  50%{
+    -webkit-transform:translateX(-6px);
+    transform:translateX(-6px);
+    -webkit-animation-timing-function:cubic-bezier(0.55,0.055,0.675,0.19);
+    animation-timing-function:cubic-bezier(0.55,0.055,0.675,0.19)
+  }
+  100% {
+    opacity:0;
+    -webkit-transform:translateX(-6px);
+    transform:translateX(-6px);
+    -webkit-animation-timing-function:cubic-bezier(0.215,0.61,0.355,1);
+    animation-timing-function:cubic-bezier(0.215,0.61,0.355,1)
+  }
+}
+
+@keyframes bounce-arrow{
+  0% {
+    opacity:0;
+    -webkit-transform:translateX(0);
+    -webkit-transform:translateX(0);
+    transform:translateX(0);
+    -webkit-animation-timing-function:cubic-bezier(0.215,0.61,0.355,1);
+    animation-timing-function:cubic-bezier(0.215,0.61,0.355,1)
+  }
+  50%{
+    -webkit-transform:translateX(-6px);
+    transform:translateX(-6px);
+    -webkit-animation-timing-function:cubic-bezier(0.55,0.055,0.675,0.19);
+    animation-timing-function:cubic-bezier(0.55,0.055,0.675,0.19)
+  }
+  100% {
+    opacity:0;
+    -webkit-transform:translateX(-6px);
+    transform:translateX(-6px);
+    -webkit-animation-timing-function:cubic-bezier(0.215,0.61,0.355,1);
+    animation-timing-function:cubic-bezier(0.215,0.61,0.355,1)
+  }
+}
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+v2.0 | 20110126
+License: none (public domain)
+ */
+
+    html, body, div, span, applet, object, iframe,
+    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+    a, abbr, acronym, address, big, cite, code,
+    del, dfn, em, img, ins, kbd, q, s, samp,
+    small, strike, strong, sub, sup, tt, var,
+    b, u, i, center,
+    dl, dt, dd, ol, ul, li,
+    fieldset, form, label, legend,
+    table, caption, tbody, tfoot, thead, tr, th, td,
+    article, aside, canvas, details, embed, 
+    figure, figcaption, footer, header, hgroup, 
+    menu, nav, output, ruby, section, summary,
+    time, mark, audio, video {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      font-size: 100%;
+      font: inherit;
+      vertical-align: baseline;
+    }
+    /* HTML5 display-role reset for older browsers */
+    article, aside, details, figcaption, figure, 
+    footer, header, hgroup, menu, nav, section {
+      display: block;
+    }
+    body {
+      line-height: 1;
+    }
+    ol, ul {
+      list-style: none;
+    }
+    blockquote, q {
+      quotes: none;
+    }
+    blockquote:before, blockquote:after,
+    q:before, q:after {
+      content: '';
+      content: none;
+    }
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      color: #222326;
+      background-color: #f8f8f8;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+    }
+    html, body, #map {
+      height: 100%;
+      padding: 0;
+      margin: 0;
+    }
+
+    #map {
+      z-index: 10;
+    }
+
+    h3 {
+      font-size: 14px;
+      font-weight:bold;
+      padding: 0;
+      margin: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .Popup .Comment {
+      display:none;
+      padding: 10px 10px;
+      min-height: 30px;
+    }
+    .Popup .Message {
+      display:none;
+      position:absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background:#fff;
+      padding: 10px;
+      box-sizing: border-box;
+      overflow:hidden;
+    }
+    .Popup .Message .success {
+      position:relative;
+      top: 300px;
+      width: 100%;
+      height: 100%;
+      background:#F05658;
+      box-sizing: border-box;
+    }
+    .Popup .Body {
+      position: relative;
+      min-width: 300px;
+      border-bottom: 1px solid #f1f1f1;
+      word-break: break-word;
+    }
+    .Popup .Body .Controls {
+      padding: 10px 10px;
+      text-align: center;
+    }
+    .Popup .Body .Controls .Button {
+      color: #fff;
+    }
+    .Popup.is--readonly .Comment { display: block; }
+    .Popup.is--readonly textarea { display: none; }
+    .Popup.is--readonly .Controls { display: none; }
+    .Popup.is--readonly.leaflet-popup .leaflet-popup-close-button {
+      display:none;
+    }
+    .Popup .Header {
+      padding: 10px;
+      border-bottom: 1px solid #f1f1f1;
+      border-radius: 3px 3px 0 0;
+      background: rgb(255, 249, 127);
+      background: -webkit-linear-gradient(108deg, #70d0ee, #2a84d2 90%);
+      color: #fff;
+    }
+    .Popup .Footer {
+      position: relative;
+      font-size: 11px;
+      color: #666;
+      padding: 7px 10px;
+      width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      box-sizing: border-box;
+      overflow:hidden;
+    }
+
+    .Button {
+      width: 100%;
+      padding: 10px 0;
+      display: inline-block;
+      text-decoration: none;
+      background:#F05658;
+      color:#fff;
+      text-align:center;
+      font-weight:bold;
+    }
+    .Button:hover {
+      background:#D54C4E;
+    }
+
+    textarea {
+      outline:none;
+      background-color: #fff;
+      width: 100%;
+      border:none;
+      box-sizing: border-box;
+      font-family: 'Lato', sans-serif;
+      font-size: 15px;
+      font-weight: 300;
+      padding: 10px;
+      height: 100px;
+      min-width: 300px;
+      resize: none;
+      word-break: break-word;
+    }
+
+    .InputField {
+      position:absolute;
+      margin: 20px;
+      width: 500px;
+      height: 43px;
+      padding: 0 11px 0 13px;
+      left: 35px;
+
+      background-color: #fff;
+      border: 1px solid transparent;
+      border-radius: 2px;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+
+      font-size: 15px;
+      font-weight: 300;
+      font-family: 'Lato', sans-serif;
+      text-overflow: ellipsis;
+
+      outline: none;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      z-index: 100;
+    }
+    .Popup .leaflet-popup-content-wrapper {
+      background:#fff;
+      font-size:14px;
+      line-height:24px;
+      color:#333;
+      border:none;
+      border-radius:0;
+      border-radius: 2px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      padding: 0;
+    }
+    .Popup .leaflet-popup-content-wrapper a {
+      color:rgba(255,255,255,0.5);
+    }
+    .Popup.leaflet-popup .leaflet-popup-close-button {
+      top: 9px;
+      right: 5px;
+      font-weight: normal;
+      font-size: 12px;
+      color: #fff;
+    }
+    .Popup.leaflet-popup .leaflet-popup-close-button:hover {
+      color: #333;
+    }
+    .Popup .leaflet-popup-content {
+      margin: 0;
+    }
+    .Popup .leaflet-popup-tip {
+      width: 12px;
+      height: 12px;
+      padding: 1px;
+      margin: -10px auto 0;
+      background:#fff;
+      border-radius:2px;
+      border: 1px solid transparent;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    #map .cartodb-zoom {
+      background-color: #fff;
+      border: 1px solid transparent;
+      border-radius: 2px;
+      -moz-box-sizing: border-box;
+      width: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    #map .cartodb-zoom a {
+      height: 20px;
+      width: 20px;
+      font-weight: normal;
+      text-decoration: none;
+      line-height: 0;
+      font-size: 15px;
+      background: none;
+      text-indent: 0;
+      padding: 10px 0;
+      box-sizing: border-box;
+      outline:none;
+    }
+    #map .cartodb-zoom a:hover {
+      background:#f1f1f1;
+    }
+
+    .Avatar{
+      width: 30px;
+      float: left;
+      margin-right: 10px;
+      border-radius: 50%;
+    }
+
+    .Spinner{position:absolute;top: 50%; left: 50%; margin-top: -16px; margin-left: -20px; border-top:2px solid #ddd;border-right:2px solid #ddd;border-bottom:2px solid #ddd;border-left:2px solid #0090d7;-webkit-animation:load8 0.8s infinite linear;-khtml-animation:load8 0.8s infinite linear;-moz-animation:load8 0.8s infinite linear;-ms-animation:load8 0.8s infinite linear;-o-animation:load8 0.8s infinite linear;animation:load8 0.8s infinite linear}
+
+    .Spinner,.Spinner:after{width:30px;height:30px;border-radius:50%}@-webkit-keyframes load8{0%{-webkit-transform:rotate(0deg);-khtml-transform:rotate(0deg);-moz-transform:rotate(0deg);-ms-transform:rotate(0deg);-o-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg);-khtml-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}@-moz-keyframes load8{0%{-webkit-transform:rotate(0deg);-khtml-transform:rotate(0deg);-moz-transform:rotate(0deg);-ms-transform:rotate(0deg);-o-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg);-khtml-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}@-ms-keyframes load8{0%{-webkit-transform:rotate(0deg);-khtml-transform:rotate(0deg);-moz-transform:rotate(0deg);-ms-transform:rotate(0deg);-o-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg);-khtml-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}@-o-keyframes load8{0%{-webkit-transform:rotate(0deg);-khtml-transform:rotate(0deg);-moz-transform:rotate(0deg);-ms-transform:rotate(0deg);-o-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg);-khtml-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes load8{0%{-webkit-transform:rotate(0deg);-khtml-transform:rotate(0deg);-moz-transform:rotate(0deg);-ms-transform:rotate(0deg);-o-transform:rotate(0deg);transform:rotate(0deg)}100%{-webkit-transform:rotate(360deg);-khtml-transform:rotate(360deg);-moz-transform:rotate(360deg);-ms-transform:rotate(360deg);-o-transform:rotate(360deg);transform:rotate(360deg)}}
+
+    .InformationPane.is--open .ToggleButton:after {
+      content: '—';
+    }
+    .InformationPane .ToggleButton:after {
+      content: '+';
+      color: #333;
+      position:relative;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .InformationPane .ToggleButton {
+      float: right;
+      color: #333;
+      text-decoration: none;
+      font-weight: normal;
+    }
+
+    .InformationPane {
+      position:absolute;
+      left: 0px;
+      bottom: 0;
+      width: 350px;
+      padding: 15px;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      display:none;
+      z-index: 1000000;
+    }
+    .InformationPane .PaneContent {
+      border-radius: 2px;
+      width: 100%;
+      background-color: #fff;
+      border: 1px solid transparent;
+      background-color: #fff;
+      border-radius: 2px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      padding: 10px 10px 15px 10px;
+      box-sizing: border-box;
+      font-size: 14px;
+      text-align: center;
+    }
+    .InformationPane .PaneContent h3 {
+      text-align:left;
+      border-bottom: 1px solid #f1f1f1;
+      margin: 0 0 10px 0;
+      padding: 0 0 5px 0;
+    }
+    .InformationPane .PaneContent p {
+      margin-bottom: 20px;
+      text-align: left;
+      line-height: 130%;
+    }
+    .InformationPane .PaneContent p a {
+      color: #333;
+      font-weight:bold;
+      text-decoration: none;
+    }
+    .InformationPane .PaneContent .Button {
+      width: 100%;
+      margin: auto;
+      background: #2a84d2;
+      border-radius: 2px;
+      text-decoration: underline;
+    }
+    .InformationPane .PaneContent .Button:hover {
+      background: #2477BE;
+    }
+    .is--logged .InformationPane .PaneContent .TwitterHelp,
+    .is--logged .InformationPane .PaneContent .Button {
+      display:none;
+    }
+    .is--logged .InformationPane .PaneContent p {
+      margin: 0;
+    }
+
+    .CommentsPane.has--loaded .ToggleButton{
+      display: block;
+    }
+    .CommentsPane .ToggleButton {
+      display:none;
+      width: 30px;
+      height: 30px;
+      position:absolute;
+      top: 50%;
+      left: -40px;
+      margin-top: -15px;
+      background: rgba(0,0,0, .2);
+      border-radius:40px;
+    }
+    .CommentsPane.is--open .ToggleButton:after {
+      background: url("/img/reverse_arrow.svg");
+      right: 11px;
+    }
+
+    .CommentsPane .ToggleButton:after {
+      content: "";
+      position: absolute;
+      top: 9px;
+      right: 12px;
+      width: 7px;
+      height: 12px;
+      background: url("/img/arrow.svg");
+    }
+
+    .CommentsPane.is--first-time .ToggleButton:after {
+      -webkit-animation: bounce-arrow 1s ease-in-out infinite;
+      animation: bounce-arrow 1s ease-in-out infinite;
+      right: 10px;
+    }
+
+    .CommentsPane .CommentsInnerContent {
+      width: 100%;
+      height: 100%;
+      overflow:hidden;
+      overflow-y: scroll;
+    }
+    .CommentsPane {
+      position:absolute;
+      right: -250px;
+      top: 0;
+      height: 100%;
+      width: 250px;
+      clear:both;
+      padding: 10px;
+      box-sizing: border-box;
+      z-index: 100;
+    }
+    .CommentItem {
+      display:none;
+      font-size: 10px;
+      vertical-align: top;
+      margin: 0 0 8px 0;
+      width: 100%;
+      padding: 7px;
+      cursor:pointer;
+
+      clear:both;
+      background-color: #fff;
+      border: 1px solid transparent;
+      border-radius: 2px;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+
+      font-size: 15px;
+      font-weight: 300;
+      font-family: 'Lato', sans-serif;
+      text-overflow: ellipsis;
+
+      outline: none;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      z-index: 100;
+    }
+    .CommentItem:hover {
+      background:#f1f1f1;
+    }
+    .CommentItem .Body {
+      font-size: 13px;
+    }
+    .CommentItem .Body strong {
+      font-weight:bold;
+    }
+    .CommentItem p {
+      word-break: break-word;
+    }
+    .CommentItem .Footer {
+      position: relative;
+      font-size: 12px;
+      color: #666;
+      padding: 3px 0 0 0;
+      margin-top: 10px;
+      width: 100%;
+      border-top: 1px solid #f1f1f1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      box-sizing: border-box;
+      overflow:hidden;
+    }
+
