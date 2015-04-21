@@ -114,6 +114,9 @@ var CommentsView = Backbone.View.extend({
     i = 0;
     this.comments.each(function(comment) {
       var view = new CommentView({ model: comment })
+      view.bind("onClick", function(coordinates) {
+        self.trigger("goToCoordinates", coordinates, self);
+      });
       i = i+1;
       self.$el.find("ul").append(view.render().$el);
     });
@@ -186,11 +189,8 @@ var CommentView = Backbone.View.extend({
     e.stopPropagation();
 
     var coordinates = [this.model.get("latitude"), this.model.get("longitude")];
-    app.map.setZoom(17);
 
-    setTimeout(function() {
-      app.map.panTo(coordinates);
-    }, 250)
+    this.trigger("onClick", coordinates, this);
   },
 
   _onAvatarClick: function(e) {
@@ -222,7 +222,19 @@ var InformationPane = Backbone.View.extend({
     var username = this.options.username !== "anonymous" ? this.options.username : "stranger";
     this.$el.append(_.template(this.template, { username: username }));
 
-    if (this.model.get("open")) {
+    var open = this.model.get("open");
+
+    if (localStorage) {
+      var help = localStorage.getItem("japan_trip_help");
+      if (help) {
+        if (JSON.parse(help).open === false) {
+          open = false;
+          this.model.set({ open: false }, { silent: true });
+        }
+      }
+    }
+
+    if (open) {
       this.$el.find(".InformationPaneInner").delay(550).fadeIn(250);
     }
 
@@ -243,6 +255,10 @@ var InformationPane = Backbone.View.extend({
       this.$el.find(".InformationPaneInner").fadeOut(250, function(){
         self.$el.removeClass("is--open");
       });
+
+      if (localStorage) {
+        localStorage.setItem("japan_trip_help", JSON.stringify({ open: this.model.get("open")}));
+      }
     }
   },
 
@@ -317,7 +333,12 @@ var App = Backbone.View.extend({
   },
 
   _renderComments: function() {
+    var self = this;
+
     this.comments = new CommentsView();
+    this.comments.bind("goToCoordinates", function(coordinates) {
+      self._goTo(17, coordinates);
+    });
     this.$el.append(this.comments.render().$el);
   },
 
