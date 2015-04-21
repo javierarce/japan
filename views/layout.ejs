@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=775, maximum-scale=1.0" />
     <link rel="stylesheet" href="//cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.13/themes/css/cartodb.css" />
     <link href='//fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
-    <link href='/css/japan.min.css' rel='stylesheet' type='text/css' />
     <script src="//maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
     <script src="//cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.13/cartodb.js"></script>
+    <link href='/css/japan.min.css' rel='stylesheet' type='text/css' />
     <script src="/js/japan.min.js"></script>
   </head>
   <body>
@@ -15,6 +15,7 @@
       var username = "{{= user.screen_name }}";
       var avatar   = "{{= user.profile_image_url }}";
     </script>
-    {% block content %}
+    <input class="InputField js-search-place" type="text" placeholder="Search for a nice place">
+    <div id="map"></div>
   </body>
 </html>
