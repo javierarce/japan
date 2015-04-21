@@ -218,18 +218,7 @@ textarea {
   @include border-radius(50%);
 }
 
-
-.InformationPane.is--open .ToggleButton:after {
-  content: '—';
-}
-.InformationPane .ToggleButton:after {
-  content: '+';
-  color: #333;
-  position:relative;
-  font-weight: bold;
-  font-size: 14px;
-}
-.InformationPane .ToggleButton {
+.InformationPane .CloseButton {
   float: right;
   color: #333;
   text-decoration: none;
@@ -237,15 +226,57 @@ textarea {
 }
 .InformationPane {
   position:absolute;
-  left: 0px;
-  bottom: 0;
+  left: 410px;
+  top: 28px;
   width: 350px;
   padding: 15px;
   @include box-sizing(border-box);
-  display:none;
-  z-index: 1000000;
+}
+.InformationPane .help {
+  background:#fff;
+  width: 30px;
+  height: 30px;
+  position:absolute;
+  top: 0px;
+  left: 50%;
+  margin-left: -15px;
+  @include border-radius(40px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  @include box-sizing(border-box);
+}
+.InformationPane .tip-container {
+  margin: 0 auto;
+  width: 40px;
+  height: 20px;
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  overflow: hidden;
+  z-index: 0;
+  margin-left: -20px;
+}
+.InformationPane .tip {
+  width: 12px;
+  height: 12px;
+  padding: 1px;
+  margin: 2px auto 0;
+  background:#fff;
+  @include border-radius(2px);
+  border: 1px solid transparent;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.2);
+  -webkit-transform: rotate(135deg);
+  -moz-transform: rotate(135deg);
+  -ms-transform: rotate(135deg);
+  -o-transform: rotate(135deg);
+  transform: rotate(135deg);
+}
+.InformationPane .InformationPaneInner {
+  display: none;
+  position:relative;
+  top: 35px;
 }
 .InformationPane .PaneContent {
+  position:relative;
   width: 100%;
   background-color: #fff;
   border: 1px solid transparent;
@@ -256,6 +287,7 @@ textarea {
   @include box-sizing(border-box);
   font-size: 14px;
   text-align: center;
+  z-index: 10;
 }
 .InformationPane .PaneContent h3 {
   text-align:left;

@@ -173,10 +173,11 @@ var InformationPane = Backbone.View.extend({
   className: "InformationPane is--open",
 
   events: {
-    "click h3": "_onToggleClick"
+    "click .js-close": "_onCloseClick",
+    "click .js-help": "_onHelpClick"
   },
 
-  template: '<div class="PaneContent"><h3>Hello, <%= username %>!<a href="#" class="ToggleButton js-toggle"></a></h3><p>As you may have heard, I\'m planning a trip to Japan at the end of May. It\'ll be my very first time there and my FOMO levels are skyrocketing. What places should I visit? Where should I eat? What are the hidden secrets of this magical and crazy island? Please, help me by adding some spots you like using the search field up there.<span class="TwitterHelp"><br /><br />Also, if you connect this website with your Twitter account I\'ll know who to say thanks to.</span><br /><br />どうもありがとう,<br /><a href="http://www.twitter.com/javier">Javier Arce</a></p> <a href="/login" class="Button">Connect with Twitter</a></div>',
+  template: '<div class="InformationPaneInner"><div class="PaneContent"><h3>Hello, <%= username %>!<a href="#" class="CloseButton js-close">×</a></h3><p>As you may have heard, I\'m planning a trip to Japan at the end of May. It\'ll be my very first time there and my FOMO levels are skyrocketing. What places should I visit? Where should I eat? What are the hidden secrets of this magical and crazy island? Please, help me by adding some spots you like using the search field up there.<span class="TwitterHelp"><br /><br />Also, if you connect this website with your Twitter account I\'ll know who to say thanks to.</span><br /><br />どうもありがとう,<br /><a href="http://www.twitter.com/javier">Javier Arce</a></p> <a href="/login" class="Button">Connect with Twitter</a></div><div class="tip-container"><div class="tip"></div></div></div><a href="#" class="help js-help"></a>',
 
   initialize: function(options) {
     this.options = options;
@@ -187,29 +188,39 @@ var InformationPane = Backbone.View.extend({
   render: function() {
     var username = this.options.username !== "anonymous" ? this.options.username : "stranger";
     this.$el.append(_.template(this.template, { username: username }));
-    this.$el.show().addClass('animated bounceInUp');
+    this.$el.find(".InformationPaneInner").delay(550).fadeIn(250);
 
-    this.$el.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
-      $(this).removeClass("animated bounceInUp");
-    });
+    //this.$el.find(".InformationPaneInner").one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+      //$(this).removeClass("animated-fast fadeInDown");
+    //});
 
     return this;
+  },
+
+  close: function() {
+    this.model.set("open", false);
   },
 
   _onChangeOpen: function() {
     var self = this;
     if (this.model.get("open")) {
-      this.$el.animate({ bottom: 0 }, { duration: 250, easing: "easeInQuad", complete: function(){
+      this.$el.find(".InformationPaneInner").fadeIn(250, function(){
         self.$el.addClass("is--open");
-      }});
+      });
     } else {
-      this.$el.animate({ bottom: -335 }, { duration: 250, easing: "easeOutQuad", complete: function(){
+      this.$el.find(".InformationPaneInner").fadeOut(250, function(){
         self.$el.removeClass("is--open");
-      }});
+      });
     }
   },
 
-  _onToggleClick: function(e){
+  _onHelpClick: function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    this.model.set("open", !this.model.get("open"));
+  },
+
+  _onCloseClick: function(e){
     e.preventDefault();
     e.stopPropagation();
     this.model.set("open", !this.model.get("open"));
@@ -247,6 +258,15 @@ var App = Backbone.View.extend({
 
   popup_template: '<div class="Header"><h3><%= name %></h3></div><div class="Body"><div class="Message"><div class="Spinner"></div><div class="success"></div></div><div class="Comment"><img class="Avatar" src="<%= profile_image_url %>" /><%= comment %></div><textarea placeholder="<%= placeholder %>" name="name" rows="8" cols="40"></textarea><div class="Controls"><a href="#" class="Button js-add-place">Add this place</a></div></div><div class="Footer"><%= address %></div>',
 
+  events: {
+    "click .js-search-place": "_onSearchClick",
+  },
+
+  _onSearchClick: function(e) {
+    this._killEvent(e);
+    this.informationPane.close();
+  },
+
   initialize: function() {
 
     _.bindAll(this, "_onVisLoaded", "_onPlaceChange", "_onClickPlace", "_onMapClick", "_onFinishedGeocoding", "_onMouseOver", "_onMouseOut", "_canClosePopup", "_onFeatureClick", "_onFeatureOver", "_onFeatureOut");
@@ -263,8 +283,8 @@ var App = Backbone.View.extend({
       $("body").addClass("is--logged");
     }
 
-    var information = new InformationPane({ username: username });
-    this.$el.append(information.render().$el);
+    this.informationPane = new InformationPane({ username: username });
+    this.$el.append(this.informationPane.render().$el);
     this.comments = new CommentsView();
     this.$el.append(this.comments.render().$el);
 
@@ -375,6 +395,8 @@ var App = Backbone.View.extend({
 
   _onMapClick: function(e) {
     var self = this;
+
+    this.informationPane.close();
 
     this.t = setTimeout(function()  {
       self.model.set("selected", -1);
@@ -519,6 +541,7 @@ var App = Backbone.View.extend({
     $(document).on("keyup", function(e) {
       if (e.keyCode === 27) {
         self.map.closePopup();
+        self.informationPane.close();
       }
     });
   }
