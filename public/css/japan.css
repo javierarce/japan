@@ -3313,7 +3313,7 @@ textarea {
 .InformationPane {
   position: absolute;
   left: 410px;
-  top: 28px;
+  top: 26px;
   width: 350px;
   padding: 15px;
   -moz-box-sizing: border-box;
@@ -3326,7 +3326,8 @@ textarea {
 }
 
 .InformationPane .help {
-  background: #fff;
+  background: #2a84d2;
+  color: #fff;
   width: 30px;
   height: 30px;
   position: absolute;
@@ -3340,7 +3341,6 @@ textarea {
   text-align: center;
   text-decoration: none;
   font-weight: bold;
-  color: #333;
   padding: 10px;
   line-height: 10px;
   -moz-box-sizing: border-box;
@@ -3418,7 +3418,6 @@ textarea {
 .InformationPane .PaneContent p a {
   color: #333;
   font-weight: bold;
-  text-decoration: none;
 }
 
 .InformationPane .PaneContent .Button {

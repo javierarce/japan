@@ -245,16 +245,17 @@ textarea {
 .InformationPane {
   position:absolute;
   left: 410px;
-  top: 28px;
+  top: 26px;
   width: 350px;
   padding: 15px;
   @include box-sizing(border-box);
 }
 .InformationPane .help:hover {
-  background:#f1f1f1;
+  background:#2477BE;
 }
 .InformationPane .help {
-  background:#fff;
+  background: #2a84d2;
+  color: #fff;
   width: 30px;
   height: 30px;
   position:absolute;
@@ -266,7 +267,6 @@ textarea {
   text-align: center;
   text-decoration: none;
   font-weight: bold;
-  color: #333;
   padding: 10px;
   line-height: 10px;
   @include box-sizing(border-box);
@@ -326,7 +326,6 @@ textarea {
 .InformationPane .PaneContent p a {
   color: #333;
   font-weight:bold;
-  text-decoration: none;
 }
 .InformationPane .PaneContent .Button {
   width: 100%;
