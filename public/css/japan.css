@@ -3236,11 +3236,24 @@ textarea {
 
 .InputField {
   position: absolute;
-  margin: 20px;
+  top: 20px;
+  left: 50px;
+  z-index: 100;
+}
+
+.InputField .CenterMapButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: url("/img/crosshair.png") no-repeat 0 0;
+  width: 20px;
+  height: 20px;
+}
+
+.InputField input {
   width: 500px;
-  height: 43px;
-  padding: 0 11px 0 13px;
-  left: 35px;
+  height: 40px;
+  padding: 0 50px 0 13px;
   background-color: #fff;
   border: 1px solid transparent;
   -moz-border-radius: 2px;
@@ -3255,7 +3268,6 @@ textarea {
   text-overflow: ellipsis;
   outline: none;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  z-index: 100;
 }
 
 #map .cartodb-zoom {
@@ -3301,6 +3313,17 @@ textarea {
   border-radius: 50%;
 }
 
+.InformationPane {
+  position: absolute;
+  left: 405px;
+  top: 27px;
+  width: 350px;
+  padding: 15px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
 .InformationPane .CloseButton {
   position: absolute;
   right: 10px;
@@ -3308,17 +3331,6 @@ textarea {
   color: #333;
   text-decoration: none;
   font-weight: normal;
-}
-
-.InformationPane {
-  position: absolute;
-  left: 410px;
-  top: 27px;
-  width: 350px;
-  padding: 15px;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
 }
 
 .InformationPane .help {

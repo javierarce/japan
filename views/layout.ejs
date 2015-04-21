@@ -8,14 +8,13 @@
     <script src="//maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
     <script src="//cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.13/cartodb.js"></script>
     <link href='/css/japan.min.css' rel='stylesheet' type='text/css' />
-    <script src="/js/japan.min.js"></script>
+    <script src="/js/japan.js"></script>
   </head>
   <body>
     <script>
       var username = "{{= user.screen_name }}";
       var avatar   = "{{= user.profile_image_url }}";
     </script>
-    <input class="InputField js-search-place" type="text" placeholder="Search for a nice place">
     <div id="map"></div>
   </body>
 </html>

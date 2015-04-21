@@ -1,3 +1,44 @@
+var InputField = Backbone.View.extend({
+
+  className: "InputField",
+
+  template: '<input type="text" placeholder="Search for a nice place" /><a href="#" class="CenterMapButton js-center-button"></a>',
+
+  events: {
+    "click input": "_onSearchClick",
+    "click .js-center-button": "_onCenterButtonClick"
+  },
+
+  initialize: function(options) {
+    this.options = options;
+    this.map = this.options.map;
+  },
+
+  render: function() {
+    this.$el.html(_.template(this.template));
+    return this;
+  },
+
+  _onCenterButtonClick: function(e) {
+    e & e.preventDefault();
+    e & e.stopPropagation();
+
+    var self = this;
+
+    this.map.setZoom(7);
+
+    setTimeout(function() {
+      self.map.panTo([36.1733569352216, 137.757568359375]);
+    }, 250);
+  },
+
+  _onSearchClick: function(e) {
+    e & e.preventDefault();
+    e & e.stopPropagation();
+    this.trigger("onSearchClick", this)
+  }
+});
+
 var Comment = Backbone.Model.extend();
 
 var Comments = Backbone.Collection.extend({
@@ -108,10 +149,10 @@ var CommentView = Backbone.View.extend({
     e.stopPropagation();
 
     var coordinates = [this.model.get("latitude"), this.model.get("longitude")];
-      app.map.setZoom(17);
+    app.map.setZoom(17);
 
     setTimeout(function() {
-    app.map.panTo(coordinates);
+      app.map.panTo(coordinates);
     }, 250)
   },
 
@@ -212,15 +253,6 @@ var App = Backbone.View.extend({
 
   popup_template: '<div class="Header"><h3><%= name %></h3></div><div class="Body"><div class="Message"><div class="Spinner"></div><div class="Success"><div class="SuccessMessage"><strong>どうもありがとう!</strong></div></div></div><div class="Comment"><img class="Avatar" src="<%= profile_image_url %>" /><%= comment %></div><textarea placeholder="<%= placeholder %>" name="name" rows="8" cols="40"></textarea><div class="Controls"><a href="#" class="Button js-add-place">Add this place</a></div></div><div class="Footer"><%= address %></div>',
 
-  events: {
-    "click .js-search-place": "_onSearchClick",
-  },
-
-  _onSearchClick: function(e) {
-    this._killEvent(e);
-    this.informationPane.close();
-  },
-
   initialize: function() {
 
     _.bindAll(this, "_onVisLoaded", "_onPlaceChange", "_onClickPlace", "_onMapClick", "_onFinishedGeocoding", "_onMouseOver", "_onMouseOut", "_canClosePopup", "_onFeatureClick", "_onFeatureOver", "_onFeatureOut");
@@ -282,9 +314,15 @@ var App = Backbone.View.extend({
     layer.on('featureOver',  this._onFeatureOver);
     layer.on('featureClick', this._onFeatureClick);
 
-    var $input = $(".js-search-place");
+    var self = this;
 
-    this.autocomplete = new google.maps.places.Autocomplete($input[0], {
+    this.searchField = new InputField({ map: this.map });
+    this.searchField.bind("onSearchClick", function() {
+      self.informationPane.close();
+    })
+    this.$el.append(this.searchField.render().$el);
+
+    this.autocomplete = new google.maps.places.Autocomplete(this.searchField.$el[0], {
       componentRestrictions: { country: "jp" }
     });
 
