@@ -382,7 +382,7 @@ var App = Backbone.View.extend({
       profile_image_url = opts.profile_image_url || avatar;
     }
 
-    var placeholder = _.template(this.placeholder_template, { place: (name !== null ? ("to " + name) : "here" ), username: (username !== "anonymous" ? ", " + username : "" ) });
+    var placeholder = _.template(this.placeholder_template, { place: (name !== null ? ("to " + name) : "here" ), username: (username !== "anonymous" ? ", @" + username : "" ) });
 
     var content = _.template(this.popup_template, { 
       name: this._getPlaceName(name),
