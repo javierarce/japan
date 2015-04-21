@@ -196,7 +196,7 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('default', [
-    'newer:scsslint',
+    //'newer:scsslint',
     'build'
   ]);
 
