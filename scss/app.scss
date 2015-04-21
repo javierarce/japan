@@ -50,20 +50,17 @@ h3 {
   @include box-sizing(border-box);
   overflow:hidden;
 }
-
 .Popup .Message .Success strong {
+  display: block;
+  margin: auto;
   color: #fff;
   font-size: 20px;
-  display: block;
   font-weight:bold;
-  margin-left:auto;
-  margin-right:auto;
 }
 .Popup .Message .Success .SuccessMessage {
   display:table-cell;
   vertical-align:middle;
 }
-
 .Popup .Message .Success {
   position:relative;
   display: table;
@@ -71,7 +68,7 @@ h3 {
   top: 300px;
   width: 100%;
   height: 100%;
-  background:#F05658;
+  background:$cRed;
   @include box-sizing(border-box);
 }
 .Popup .Body {
@@ -154,7 +151,7 @@ h3 {
   padding: 10px 0;
   @include inline-block;
   text-decoration: none;
-  background:#F05658;
+  background:$cRed;
   color:#fff;
   text-align:center;
   font-weight:bold;
@@ -192,6 +189,10 @@ textarea {
   background: url("/img/crosshair.png") no-repeat 0 0;
   width: 20px;
   height: 20px;
+  @include opacity(.8);
+}
+.InputField .CenterMapButton:hover {
+  @include opacity(1);
 }
 .InputField input {
   width: 500px;

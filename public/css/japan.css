@@ -3065,12 +3065,11 @@ h3 {
 }
 
 .Popup .Message .Success strong {
+  display: block;
+  margin: auto;
   color: #fff;
   font-size: 20px;
-  display: block;
   font-weight: bold;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .Popup .Message .Success .SuccessMessage {
@@ -3248,6 +3247,13 @@ textarea {
   background: url("/img/crosshair.png") no-repeat 0 0;
   width: 20px;
   height: 20px;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
+  opacity: 0.8;
+}
+
+.InputField .CenterMapButton:hover {
+  filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
+  opacity: 1;
 }
 
 .InputField input {
