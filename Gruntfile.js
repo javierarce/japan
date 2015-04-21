@@ -126,7 +126,7 @@ module.exports = function(grunt) {
       },
 
       css: {
-        files: ['scss/*.scss'],
+        files: ['scss/app.scss'],
         tasks: ['css'],
         options: {
           livereload: true,
