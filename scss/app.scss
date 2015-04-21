@@ -11,6 +11,7 @@ body {
   background-color: #f8f8f8;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  overflow:hidden;
 }
 html, body, #map {
   height: 100%;
@@ -49,8 +50,24 @@ h3 {
   @include box-sizing(border-box);
   overflow:hidden;
 }
-.Popup .Message .success {
+
+.Popup .Message .Success strong {
+  color: #fff;
+  font-size: 20px;
+  display: block;
+  font-weight:bold;
+  margin-left:auto;
+  margin-right:auto;
+}
+.Popup .Message .Success .SuccessMessage {
+  display:table-cell;
+  vertical-align:middle;
+}
+
+.Popup .Message .Success {
   position:relative;
+  display: table;
+  text-align:center;
   top: 300px;
   width: 100%;
   height: 100%;
@@ -80,8 +97,7 @@ h3 {
   padding: 10px;
   border-bottom: 1px solid #f1f1f1;
   @include border-radius(3px 3px 0 0);
-  background: rgb(255, 249, 127);
-  background: -webkit-linear-gradient(108deg, #70d0ee, #2a84d2 90%);
+  @include background(linear-gradient(335deg, #70d0ee, #2a84d2));
   color: #fff;
 }
 .Popup .Footer {
@@ -219,7 +235,9 @@ textarea {
 }
 
 .InformationPane .CloseButton {
-  float: right;
+  position:absolute;
+  right: 10px;
+  top: 10px;
   color: #333;
   text-decoration: none;
   font-weight: normal;
@@ -232,6 +250,9 @@ textarea {
   padding: 15px;
   @include box-sizing(border-box);
 }
+.InformationPane .help:hover {
+  background:#f1f1f1;
+}
 .InformationPane .help {
   background:#fff;
   width: 30px;
@@ -242,6 +263,12 @@ textarea {
   margin-left: -15px;
   @include border-radius(40px);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  text-decoration: none;
+  font-weight: bold;
+  color: #333;
+  padding: 10px;
+  line-height: 10px;
   @include box-sizing(border-box);
 }
 .InformationPane .tip-container {
@@ -264,11 +291,7 @@ textarea {
   @include border-radius(2px);
   border: 1px solid transparent;
   box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.2);
-  -webkit-transform: rotate(135deg);
-  -moz-transform: rotate(135deg);
-  -ms-transform: rotate(135deg);
-  -o-transform: rotate(135deg);
-  transform: rotate(135deg);
+  @include transform(rotate(135deg));
 }
 .InformationPane .InformationPaneInner {
   display: none;

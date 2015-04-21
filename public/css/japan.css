@@ -3020,6 +3020,7 @@ body {
   background-color: #f8f8f8;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  overflow: hidden;
 }
 
 html, body, #map {
@@ -3063,8 +3064,24 @@ h3 {
   overflow: hidden;
 }
 
-.Popup .Message .success {
+.Popup .Message .Success strong {
+  color: #fff;
+  font-size: 20px;
+  display: block;
+  font-weight: bold;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.Popup .Message .Success .SuccessMessage {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.Popup .Message .Success {
   position: relative;
+  display: table;
+  text-align: center;
   top: 300px;
   width: 100%;
   height: 100%;
@@ -3112,8 +3129,10 @@ h3 {
   -moz-border-radius: 3px 3px 0 0;
   -webkit-border-radius: 3px;
   border-radius: 3px 3px 0 0;
-  background: #fff97f;
-  background: -webkit-linear-gradient(108deg, #70d0ee, #2a84d2 90%);
+  background: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNzgwODE0IiB5MT0iMS4xMDIyMDgiIHgyPSIwLjIxOTE4NiIgeTI9Ii0wLjEwMjIwOCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzcwZDBlZSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzJhODRkMiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background: -moz-linear-gradient(115deg, #70d0ee, #2a84d2);
+  background: -webkit-linear-gradient(115deg, #70d0ee, #2a84d2);
+  background: linear-gradient(335deg, #70d0ee, #2a84d2);
   color: #fff;
 }
 
@@ -3283,7 +3302,9 @@ textarea {
 }
 
 .InformationPane .CloseButton {
-  float: right;
+  position: absolute;
+  right: 10px;
+  top: 10px;
   color: #333;
   text-decoration: none;
   font-weight: normal;
@@ -3300,6 +3321,10 @@ textarea {
   box-sizing: border-box;
 }
 
+.InformationPane .help:hover {
+  background: #f1f1f1;
+}
+
 .InformationPane .help {
   background: #fff;
   width: 30px;
@@ -3312,6 +3337,12 @@ textarea {
   -webkit-border-radius: 40px;
   border-radius: 40px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  text-decoration: none;
+  font-weight: bold;
+  color: #333;
+  padding: 10px;
+  line-height: 10px;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -3340,10 +3371,9 @@ textarea {
   border-radius: 2px;
   border: 1px solid transparent;
   box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.2);
-  -webkit-transform: rotate(135deg);
   -moz-transform: rotate(135deg);
   -ms-transform: rotate(135deg);
-  -o-transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
   transform: rotate(135deg);
 }
 

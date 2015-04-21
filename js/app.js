@@ -108,11 +108,11 @@ var CommentView = Backbone.View.extend({
     e.stopPropagation();
 
     var coordinates = [this.model.get("latitude"), this.model.get("longitude")];
-    app.map.panTo(coordinates);
+      app.map.setZoom(17);
 
     setTimeout(function() {
-      app.map.setZoom(17);
-    }, 150)
+    app.map.panTo(coordinates);
+    }, 250)
   },
 
   _onAvatarClick: function(e) {
@@ -132,7 +132,7 @@ var InformationPane = Backbone.View.extend({
     "click .js-help": "_onHelpClick"
   },
 
-  template: '<div class="InformationPaneInner"><div class="PaneContent"><h3>Hello, <%= username %>!<a href="#" class="CloseButton js-close">×</a></h3><p>As you may have heard, I\'m planning a trip to Japan at the end of May. It\'ll be my very first time there and my FOMO levels are skyrocketing. What places should I visit? Where should I eat? What are the hidden secrets of this magical and crazy island? Please, help me by adding some spots you like using the search field up there.<span class="TwitterHelp"><br /><br />Also, if you connect this website with your Twitter account I\'ll know who to say thanks to.</span><br /><br />どうもありがとう,<br /><a href="http://www.twitter.com/javier">Javier Arce</a></p> <a href="/login" class="Button">Connect with Twitter</a></div><div class="tip-container"><div class="tip"></div></div></div><a href="#" class="help js-help"></a>',
+  template: '<div class="InformationPaneInner"><div class="PaneContent"><h3>Hello, <%= username %>!<a href="#" class="CloseButton js-close">×</a></h3><p>As you may have heard, I\'m planning a trip to Japan at the end of May. It\'ll be my very first time there and my FOMO levels are skyrocketing. What places should I visit? Where should I eat? What are the hidden secrets of this magical and crazy island? Please, help me by adding some spots you like using the search field up there.<span class="TwitterHelp"><br /><br />Also, if you connect this website with your Twitter account I\'ll know who to say thanks to.</span><br /><br />どうもありがとう,<br /><a href="http://www.twitter.com/javier">Javier Arce</a></p> <a href="/login" class="Button">Connect with Twitter</a></div><div class="tip-container"><div class="tip"></div></div></div><a href="#" class="help js-help">?</a>',
 
   initialize: function(options) {
     this.options = options;
@@ -211,7 +211,7 @@ var App = Backbone.View.extend({
 
   placeholder_template: "Why do you think I should go <%= place %><%= username %>?",
 
-  popup_template: '<div class="Header"><h3><%= name %></h3></div><div class="Body"><div class="Message"><div class="Spinner"></div><div class="success"></div></div><div class="Comment"><img class="Avatar" src="<%= profile_image_url %>" /><%= comment %></div><textarea placeholder="<%= placeholder %>" name="name" rows="8" cols="40"></textarea><div class="Controls"><a href="#" class="Button js-add-place">Add this place</a></div></div><div class="Footer"><%= address %></div>',
+  popup_template: '<div class="Header"><h3><%= name %></h3></div><div class="Body"><div class="Message"><div class="Spinner"></div><div class="Success"><div class="SuccessMessage"><strong>どうもありがとう!</strong></div></div></div><div class="Comment"><img class="Avatar" src="<%= profile_image_url %>" /><%= comment %></div><textarea placeholder="<%= placeholder %>" name="name" rows="8" cols="40"></textarea><div class="Controls"><a href="#" class="Button js-add-place">Add this place</a></div></div><div class="Footer"><%= address %></div>',
 
   events: {
     "click .js-search-place": "_onSearchClick",
@@ -459,7 +459,7 @@ var App = Backbone.View.extend({
     var self = this;
     $el.find(".Message").fadeIn(150);
     $.ajax({ url: "/place", data: JSON.stringify(data), type: "POST", contentType: "application/json", dataType: "json" }).done(function() {
-      $el.find(".message .success").animate({ top: 0 }, { duration: 100, easing: "easeOutQuad" });
+      $el.find(".Message .Success").animate({ top: 0 }, { duration: 100, easing: "easeOutQuad" });
       self._addMarker(data);
     });
   },
