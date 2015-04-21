@@ -2,4 +2,5 @@
 .sass-cache
 node_modules
 log/*
+lib/config.js
 .tmp
