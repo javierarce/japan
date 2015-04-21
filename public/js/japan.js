@@ -367,12 +367,12 @@ var App = Backbone.View.extend({
     })
     this.$el.append(this.searchField.render().$el);
 
-    this.autocomplete = new google.maps.places.Autocomplete(this.searchField.$el[0], {
+    this.autocomplete = new google.maps.places.Autocomplete(this.searchField.$("input")[0], {
       componentRestrictions: { country: "jp" }
     });
+    google.maps.event.addListener(this.autocomplete, 'place_changed', this._onPlaceChange);
 
     this.geocoder = new google.maps.Geocoder();
-    google.maps.event.addListener(this.autocomplete, 'place_changed', this._onPlaceChange);
   },
 
   _onFeatureOut: function(e, latlng, pos, data, layer) {
