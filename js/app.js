@@ -263,7 +263,7 @@ var App = Backbone.View.extend({
 
   initialize: function() {
 
-    _.bindAll(this, "_onVisLoaded", "_onPlaceChange", "_onClickPlace", "_onMapClick", "_onFinishedGeocoding", "_onMouseOver", "_onMouseOut", "_canClosePopup", "_onFeatureClick", "_onFeatureOver", "_onFeatureOut");
+    _.bindAll(this, "_onVisLoaded", "_onPlaceChange", "_onClickPlace", "_onMapClick", "_onMapDblClick", "_onFinishedGeocoding", "_onMouseOver", "_onMouseOut", "_canClosePopup", "_onFeatureClick", "_onFeatureOver", "_onFeatureOut");
 
     this._setupModel();
 
@@ -338,7 +338,10 @@ var App = Backbone.View.extend({
 
     this.map = vis.getNativeMap();
 
-    this.map.on('click', this._onMapClick);
+    this.map.clicked = 0;
+
+    this.map.on('click',    this._onMapClick);
+    this.map.on('dblclick', this._onMapDblClick);
 
     this._setupLocalStorage();
 
@@ -440,17 +443,27 @@ var App = Backbone.View.extend({
   _onMapClick: function(e) {
     var self = this;
 
+    this.map.clicked = this.map.clicked + 1;
+
     this.informationPane.close();
 
     this.t = setTimeout(function()  {
-      self.model.set("selected", -1);
-      var coordinates = [e.latlng.lat, e.latlng.lng];
-      var latlng = new google.maps.LatLng(coordinates[0], coordinates[1]);
+      if (self.map.clicked == 1){
+        self.model.set("selected", -1);
+        var coordinates = [e.latlng.lat, e.latlng.lng];
+        var latlng = new google.maps.LatLng(coordinates[0], coordinates[1]);
 
-      self.geocoder.geocode({ 'latLng': latlng }, function(results, status) {
-        self._onFinishedGeocoding(coordinates, results, status);
-      });
+        self.map.clicked = 0;
+
+        self.geocoder.geocode({ 'latLng': latlng }, function(results, status) {
+          self._onFinishedGeocoding(coordinates, results, status);
+        });
+      }
     }, 200);
+  },
+
+  _onMapDblClick: function(e) {
+    this.map.clicked = 0;
   },
 
   _getPlaceName: function(name) {
