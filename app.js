@@ -6,6 +6,7 @@ var bodyParser     = require('body-parser');
 var cookieParser   = require('cookie-parser');
 var methodOverride = require('method-override');
 var session        = require('express-session');
+var RedisStore     = require('connect-redis')(session);
 var swig           = require('swig');
 var crypto         = require('crypto');
 var everyauth      = require('everyauth');
@@ -44,7 +45,11 @@ app.set('view engine', 'ejs');
 app.use(cookieParser());
 app.use(bodyParser());
 app.use(methodOverride());
-app.use(session({ secret: 'Hg[jbYaB7>S6pD,<WsbT' }));
+app.use(session({
+    store: new RedisStore({ host: 'localhost', port: 6379, ttl: (60000 * 24 * 30) }),
+    cookie: { maxAge: (60000 * 24 * 30)},
+    secret: Config.session_secret
+}));
 app.use(everyauth.middleware(app));
 app.use(express.static(__dirname + '/public'));
 
