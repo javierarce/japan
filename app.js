@@ -46,8 +46,8 @@ app.use(cookieParser());
 app.use(bodyParser());
 app.use(methodOverride());
 app.use(session({
-    store: new RedisStore({ host: 'localhost', port: 6379, ttl: (60000 * 24 * 30) }),
-    cookie: { maxAge: (60000 * 24 * 30)},
+    store: new RedisStore({ host: 'localhost', port: 6379 }),
+    cookie: { maxAge: 365 * 24 * 60 * 60 * 1000 },
     secret: Config.session_secret
 }));
 app.use(everyauth.middleware(app));
