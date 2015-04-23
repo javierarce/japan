@@ -3340,7 +3340,7 @@ textarea {
 }
 
 .InformationPane .help {
-  background: #2a84d2;
+  background: #2A84D2;
   color: #fff;
   width: 30px;
   height: 30px;
@@ -3441,7 +3441,7 @@ textarea {
 .InformationPane .PaneContent .Button {
   width: 100%;
   margin: auto;
-  background: #2a84d2;
+  background: #2A84D2;
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
   border-radius: 2px;
@@ -3578,4 +3578,81 @@ textarea {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   overflow: hidden;
+}
+
+.UserAvatar {
+  position: absolute;
+  display: none;
+  width: 30px;
+  top: 26px;
+  left: 608px;
+}
+
+.UserAvatar a {
+  display: block;
+  width: 30px;
+  height: 30px;
+  background: #fff;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.UserAvatar img {
+  width: 100%;
+  height: 100%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+
+.UserAvatar.is--connected {
+  display: block;
+}
+
+.UserAvatar:hover .Tooltip {
+  display: block;
+}
+
+.Tooltip {
+  display: none;
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  position: absolute;
+  font-weight: bold;
+  margin-left: -60px;
+  box-sizing: border-box;
+  width: 120px;
+  line-height: 20px;
+  padding: 5px;
+  font-size: 11px;
+  text-align: center;
+  color: #fff;
+  background: #2A84D2;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 10000;
+}
+
+.Tooltip:after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent transparent #2A84D2 transparent;
+  top: -16px;
+  left: 50%;
+  margin-left: -10px;
 }

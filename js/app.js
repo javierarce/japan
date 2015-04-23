@@ -1,8 +1,34 @@
+var UserView = Backbone.View.extend({
+
+  template: _.template('<a href="<%= url %>"><img src="<%= src %>" /></a><div class="Tooltip">You are connected</divj'),
+
+  className: "UserAvatar",
+
+  initialize: function(options) {
+    this.options = options;
+  },
+
+  render: function() {
+
+    var url = "http://www.twitter.com/" + this.options.username;
+    var options = _.extend(this.options, { url: url });
+
+    this.$el.append(this.template(options));
+
+    if (this.options.username !== "anonymous") {
+      this.$el.addClass("is--connected");
+    }
+
+    return this;
+  }
+
+});
+
 var InputField = Backbone.View.extend({
 
   className: "InputField",
 
-  template: '<input type="text" placeholder="Search for a nice place" /><a href="#" class="CenterMapButton js-center-button"></a>',
+  template: _.template('<input type="text" placeholder="Search for a nice place" /><a href="#" class="CenterMapButton js-center-button"></a>'),
 
   events: {
     "click input": "_onSearchClick",
@@ -14,7 +40,7 @@ var InputField = Backbone.View.extend({
   },
 
   render: function() {
-    this.$el.html(_.template(this.template));
+    this.$el.html(this.template);
     return this;
   },
 
@@ -280,11 +306,17 @@ var App = Backbone.View.extend({
     this._renderInputField();
     this._renderInformationPane();
     this._renderComments();
+    this._renderUser();
   },
 
   _renderInformationPane: function() {
     this.informationPane = new InformationPane({ username: username });
     this.$el.append(this.informationPane.render().$el);
+  },
+
+  _renderUser: function() {
+    this.user = new UserView({ username: username, src: avatar });
+    this.$el.append(this.user.render().$el);
   },
 
   _renderComments: function() {
@@ -448,7 +480,7 @@ var App = Backbone.View.extend({
     this.informationPane.close();
 
     this.t = setTimeout(function()  {
-      if (self.map.clicked == 1){
+      if (self.map.clicked === 1){
         self.model.set("selected", -1);
         var coordinates = [e.latlng.lat, e.latlng.lng];
         var latlng = new google.maps.LatLng(coordinates[0], coordinates[1]);
@@ -459,7 +491,7 @@ var App = Backbone.View.extend({
           self._onFinishedGeocoding(coordinates, results, status);
         });
       }
-    }, 200);
+    }, 250);
   },
 
   _onMapDblClick: function(e) {
