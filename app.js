@@ -234,17 +234,22 @@ app.get('/rss', function(req, res){
 
     if (data && data.rows) {
       var rows = data.rows;
+
       for (var i = 0; i < rows.length; i++) {
+        var row = rows[i];
         feed.item({
-          title:  rows[i].name,
-          description: rows[i].description,
-          author: "@" + rows[i].screen_name,
-          date: rows[i].created_at
+          title:  row.name,
+          description: row.description,
+          author: "@" + row.screen_name,
+          guid: "http://japan.javierarce.com/item?=" + row.cartodb_id,
+          date: row.created_at
         });
       }
     }
+
     res.write(feed.xml());
     return res.end();
+
   });
 
 });
