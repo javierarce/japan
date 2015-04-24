@@ -16,6 +16,7 @@ var request        = require('request');
 var Config         = require("./lib/config").Config;
 var CartoDB        = require('cartodb');
 var sanitizeHtml   = require('sanitize-html');
+var RSS            = require('rss');
 
 //var Firebase     = require("firebase");
 
@@ -128,33 +129,6 @@ getRandomID = function(length) {
   return crypto.randomBytes(length).toString('hex');
 };
 
-createTable = function(table, successCallback, errorCallback) {
-
-  addTable({ table: table }, function(e, data) {
-
-    if (e) {
-      if (errorCallback) {
-        errorCallback(e);
-      }
-    } else {
-
-      cartodbfyTable({ table: table }, function(e, data) {
-        if (e) {
-          if (errorCallback) {
-            errorCallback(e);
-          }
-        } else {
-          if (successCallback) {
-            successCallback();
-          }
-        }
-      });
-    }
-
-  });
-
-};
-
 insert = function(options, callback) {
 
   var data = options.data;
@@ -190,6 +164,19 @@ insert = function(options, callback) {
   return cartoDB.query(query, opts, callback);
 };
 
+getComments = function(options, callback) {
+
+  var data = options.data;
+
+  query = "SELECT * FROM {table} LIMIT 25;";
+
+  var opts = {
+    table: options.table,
+  };
+
+  return cartoDB.query(query, opts, callback);
+};
+
 deleteGeometry = function(data, callback) {
 
   console.log(data)
@@ -214,6 +201,11 @@ getLoginData = function(req) {
 // Routes
 // =============================
 
+app.get('/', function(req, res){
+  var user = getLoginData(req);
+  res.render('index', { user: user });
+});
+
 app.get("/redirect", function(request, response) {
   return response.redirect("/");
 });
@@ -222,31 +214,41 @@ app.get('/login', function(req, res){
   res.redirect("/auth/twitter");
 });
 
-app.get('/map/:id/download', function(req, res){
-  res.setHeader("content-disposition", "attachment; filename=logo.png");
-  request('https://arce.cartodb.com/api/v2/sql?q=SELECT%20*%20FROM%20prueba_16&format=csv').pipe(res);
-});
+app.get('/rss', function(req, res){
+  var feedOptions = {
+    title: 'My Japan trip',
+    description: 'RSS Feed of the tips for my trip to Japan',
+    site_url: 'http://japan.javierarce.com/rss',
+    site_url: 'http://japan.javierarce.com',
+    copyright: '2015 Javier Arce',
+    language: 'en',
+    ttl: '60'
+  };
 
-app.get('/map/:id', function(req, res){
-  var user = getLoginData(req);
-  res.render('index', { id: req.params.id, user: user });
-});
+  getComments({ table: Config.default_table }, function(e, data) {
+    res.writeHead(res.statusCode, {
+      "Content-Type": "text/xml"
+    });
 
-app.get('/', function(req, res){
-  var user = getLoginData(req);
-  res.render('index', { user: user });
-});
+    var feed = new RSS(feedOptions);
 
-app.get('/delete/:geometry_id', function(req, res){
+    var rows = data.rows;
 
-  var table = "prueba_16";
-  var geometry_id = req.params.geometry_id;
+    if (rows) {
+      for (var i = 0; i < rows.length; i++) {
+        feed.item({
+          title:  rows[i].name,
+          description: rows[i].description,
+          author: "@" + rows[i].screen_name,
+          date: rows[i].created_at
+        });
+      }
+      var xml = feed.xml();
+    }
 
-  deleteGeometry({ table: table, geometry_id: geometry_id }, function(e, data) {
-    console.log(e, data);
+    res.write(xml);
+    return res.end();
   });
-
-  res.render('index');
 
 });
 

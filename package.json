@@ -28,7 +28,8 @@
     "swig": "~1.3.2",
     "underscore": "latest",
     "request": "latest",
-    "sanitize-html": "latest"
+    "sanitize-html": "latest",
+    "rss": "1.1.1"
   },
   "devDependencies": {
     "grunt": "~0.4.2",
