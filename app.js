@@ -168,7 +168,7 @@ getComments = function(options, callback) {
 
   var data = options.data;
 
-  query = "SELECT * FROM {table} LIMIT 25 ORDER BY updated_at DESC";
+  query = "SELECT * FROM {table} ORDER BY updated_at DESC LIMIT 25";
 
   var opts = {
     table: options.table,
@@ -242,10 +242,8 @@ app.get('/rss', function(req, res){
           date: rows[i].created_at
         });
       }
-      var xml = feed.xml();
     }
-
-    res.write(xml);
+    res.write(feed.xml());
     return res.end();
   });
 
