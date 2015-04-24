@@ -61,7 +61,7 @@ var UserView = Backbone.View.extend({
     this.$el.append(this.template(options));
 
     if (this.options.username !== "anonymous") {
-      this.$el.addClass("is--connected");
+      this.$el.addClass("is--connected animated bounceIn");
     }
 
     return this;

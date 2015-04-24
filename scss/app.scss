@@ -250,6 +250,7 @@ textarea {
   width: 350px;
   padding: 15px;
   @include box-sizing(border-box);
+  z-index: 99;
 }
 .InformationPane .CloseButton {
   position:absolute;
@@ -457,6 +458,7 @@ textarea {
   width: 30px;
   top: 26px;
   left: 608px;
+  z-index: 100;
 }
 .UserAvatar a {
   display: block;

@@ -3586,6 +3586,7 @@ textarea {
   width: 30px;
   top: 26px;
   left: 608px;
+  z-index: 100;
 }
 
 .UserAvatar a {
