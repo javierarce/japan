@@ -241,6 +241,7 @@ app.get('/rss', function(req, res){
           title:  row.name,
           description: row.description,
           author: "@" + row.screen_name,
+          url: "http://japan.javierarce.com/item?=" + row.cartodb_id,
           guid: "http://japan.javierarce.com/item?=" + row.cartodb_id,
           date: row.created_at
         });
