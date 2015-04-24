@@ -168,7 +168,7 @@ getComments = function(options, callback) {
 
   var data = options.data;
 
-  query = "SELECT * FROM {table} LIMIT 25 ORDER BY updated_at DESC;";
+  query = "SELECT * FROM {table} LIMIT 25 ORDER BY updated_at DESC";
 
   var opts = {
     table: options.table,
@@ -232,9 +232,8 @@ app.get('/rss', function(req, res){
 
     var feed = new RSS(feedOptions);
 
-    var rows = data.rows;
-
-    if (rows) {
+    if (data && data.rows) {
+      var rows = data.rows;
       for (var i = 0; i < rows.length; i++) {
         feed.item({
           title:  rows[i].name,
