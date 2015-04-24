@@ -18,21 +18,11 @@ var CartoDB        = require('cartodb');
 var sanitizeHtml   = require('sanitize-html');
 var RSS            = require('rss');
 
-//var Firebase     = require("firebase");
-
 var app = express();
 
 everyauth.twitter.consumerKey(Config.twitterConsumerKey).consumerSecret(Config.twitterConsumerSecret).findOrCreateUser(function(session, accessToken, accessTokenSecret, twitterUserMetadata) {
   session.twitterUserMetadata = twitterUserMetadata;
   session.save();
-
-  //var f = new Firebase("https://cartodb.firebaseio.com/");
-
-  //f.set({
-    //username: twitterUserMetadata.screen_name,
-    //avatar: twitterUserMetadata.profile_image_url
-  //});
-
   return {
     screen_name: twitterUserMetadata.screen_name,
     avatar: twitterUserMetadata.profile_image_url
@@ -159,8 +149,6 @@ insert = function(options, callback) {
     comment: comment
   };
 
-  console.log(opts);
-
   return cartoDB.query(query, opts, callback);
 };
 
@@ -175,18 +163,6 @@ getComments = function(options, callback) {
   };
 
   return cartoDB.query(query, opts, callback);
-};
-
-deleteGeometry = function(data, callback) {
-
-  console.log(data)
-  query = "DELETE FROM {table} WHERE geometry_id = {geometry_id};";
-
-  return cartoDB.query(query, {
-    table: data.table,
-    geometry_id: data.geometry_id
-  }, callback);
-
 };
 
 getLoginData = function(req) {
@@ -264,7 +240,6 @@ app.post('/place', function(req, res){
   }
 
   insert({ table: Config.default_table, data: req.body, twitter: twitter }, function(e, data) {
-    console.log(e, data);
 
     res.writeHead("200", {
       "Content-Type": "application/json"
