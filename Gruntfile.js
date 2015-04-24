@@ -117,8 +117,8 @@ module.exports = function(grunt) {
 
     watch: {
       scripts: {
-        files: ['scss/*.*', 'js/**/*.*'],
-        tasks: ['html', 'css', 'js'],
+        files: ['js/**/*.*'],
+        tasks: ['html', 'js'],
         options: {
           livereload: false,
           spawn: false
@@ -126,7 +126,7 @@ module.exports = function(grunt) {
       },
 
       css: {
-        files: ['scss/app.scss'],
+        files: ['scss/**/*.*'],
         tasks: ['css'],
         options: {
           livereload: true,
