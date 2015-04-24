@@ -168,7 +168,7 @@ getComments = function(options, callback) {
 
   var data = options.data;
 
-  query = "SELECT * FROM {table} LIMIT 25;";
+  query = "SELECT * FROM {table} LIMIT 25 ORDER BY updated_at DESC;";
 
   var opts = {
     table: options.table,
