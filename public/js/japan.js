@@ -232,14 +232,20 @@ var InformationPane = Backbone.View.extend({
   className: "InformationPane",
 
   events: {
-    "click .js-close": "_onCloseClick",
+    "mouseenter .help": "_onMouseEnter",
+    "mouseleave .help": "_onMouseLeaveHelp",
+    "mousemove .InformationPaneInner": "_onMouseEnter",
+    "mouseleave .InformationPaneInner": "_onMouseLeave",
     "click .js-help": "_onHelpClick"
   },
 
-  template: '<div class="InformationPaneInner"><div class="PaneContent"><h3>Hello, <%= username %>!<a href="#" class="CloseButton js-close">×</a></h3><p>As you may have heard, I\'m planning a trip to Japan at the end of May. It\'ll be my very first time there and my FOMO levels are skyrocketing. What places should I visit? Where should I eat? What are the hidden secrets of this magical and crazy island? Please, help me by adding some of your favorite spots using the search field up there.<span class="TwitterHelp"><br /><br />Also, if you connect this website with your Twitter account I\'ll know who to say thanks to :^)</span><br /><br />どうもありがとう,<br /><a href="http://www.twitter.com/javier">Javier Arce</a></p> <a href="/login" class="Button">Connect with Twitter</a></div><div class="tip-container"><div class="tip"></div></div></div><a href="#" class="help js-help">?</a>',
+  template: '<div class="InformationPaneInner"><div class="PaneContent"><h3>Hello, <%= username %>!</h3><p>As you may have heard, I\'m planning a trip to Japan at the end of May. It\'ll be my very first time there and my FOMO levels are skyrocketing. What places should I visit? Where should I eat? What are the hidden secrets of this magical and crazy island? Please, help me by adding some of your favorite spots using the search field up there.<span class="TwitterHelp"><br /><br />Also, if you connect this website with your Twitter account I\'ll know who to say thanks to :^)</span><br /><br />どうもありがとう,<br /><a href="http://www.twitter.com/javier">Javier Arce</a></p> <a href="/login" class="Button">Connect with Twitter</a></div><div class="tip-container"><div class="tip"></div></div></div><a href="#" class="help js-help">?</a>',
 
   initialize: function(options) {
+    _.bindAll(this, "_onMouseEnter", "_onMouseLeave");
+
     this.options = options;
+
     this.model = new Backbone.Model({ open: this.options.username === "anonymous" ? true : false });
     this.model.on("change:open", this._onChangeOpen, this);
   },
@@ -267,6 +273,29 @@ var InformationPane = Backbone.View.extend({
     return this;
   },
 
+  _onMouseEnter: function(e) {
+    if (this.t) {
+     clearTimeout(this.t);
+    }
+    this.model.set("open", true);
+  },
+
+  _onMouseLeaveHelp: function(e) {
+    var self = this;
+
+    this.t = setTimeout(function() {
+      self.model.set("open", false);
+    }, 300);
+  },
+
+  _onMouseLeave: function(e) {
+    var self = this;
+
+    this.t = setTimeout(function() {
+      self.model.set("open", false);
+    }, 300);
+  },
+
   close: function() {
     this.model.set("open", false);
   },
@@ -274,11 +303,11 @@ var InformationPane = Backbone.View.extend({
   _onChangeOpen: function() {
     var self = this;
     if (this.model.get("open")) {
-      this.$el.find(".InformationPaneInner").fadeIn(250, function(){
+      this.$el.find(".InformationPaneInner").fadeIn(150, function(){
         self.$el.addClass("is--open");
       });
     } else {
-      this.$el.find(".InformationPaneInner").fadeOut(250, function(){
+      this.$el.find(".InformationPaneInner").fadeOut(150, function(){
         self.$el.removeClass("is--open");
       });
 
@@ -486,7 +515,7 @@ var App = Backbone.View.extend({
     this._killEvent(e);
 
     if (this.t) {
-      clearInterval(this.t);
+      clearTimeout(this.t);
     }
 
     this.map.closePopup();
