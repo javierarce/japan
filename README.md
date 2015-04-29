@@ -11,11 +11,15 @@ What places should I visit? Where should I eat? What should I avoid? What are th
 
 Quick start:
 
-1. Rename ```lib/config.sample.js``` to ```lib/config.js``` and add your CartoDB and Twitter credentials.
-2. Start redis.
-3. ```npm install```
-4. ```node app.js```
-5. ```open http://localhost:5000```
+1. Create a <a href="http://www.cartodb.com">CartoDB</a> account.
+2. Copy your `API key` from `https://{your_username}.cartodb.com/your_apps`.
+3. <a href="https://apps.twitter.com/app/new">Create a Twitter app</a> and copy the consumer key (API Key) and consumer secret (API Secret).
+4. Get the code `git clone git@github.com:javierarce/japan.git`.
+5. Rename ```lib/config.sample.js``` to ```lib/config.js``` and add your CartoDB and Twitter credentials.
+6. ```npm install```
+7. Start your redis server (optional, to store the session information)
+8. Run the app: ```node app.js```
+9. ```open http://localhost:5000```
 
 ### Customization
 
