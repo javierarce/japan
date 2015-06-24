@@ -322,6 +322,9 @@ textarea {
   text-align: center;
   z-index: 10;
 }
+.InformationPane .PaneContent strong {
+  font-weight:bold;
+}
 .InformationPane .PaneContent h3 {
   text-align:left;
   border-bottom: 1px solid #f1f1f1;

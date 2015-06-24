@@ -3328,6 +3328,7 @@ textarea {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
+  z-index: 99;
 }
 
 .InformationPane .CloseButton {
@@ -3418,6 +3419,10 @@ textarea {
   font-size: 14px;
   text-align: center;
   z-index: 10;
+}
+
+.InformationPane .PaneContent strong {
+  font-weight: bold;
 }
 
 .InformationPane .PaneContent h3 {
