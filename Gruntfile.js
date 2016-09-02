@@ -1,11 +1,8 @@
-module.exports = function(grunt) {
-
+module.exports = function (grunt) {
   require('load-grunt-tasks')(grunt);
   require('time-grunt')(grunt);
 
-  // 1. All configuration goes here
   grunt.initConfig({
-
     pkg: grunt.file.readJSON('package.json'),
 
     clean: {
@@ -21,8 +18,7 @@ module.exports = function(grunt) {
         files: [{
           dot: true,
           src: [
-            '.tmp/css',
-            'public/css'
+            'css'
           ]
         }]
       },
@@ -30,7 +26,7 @@ module.exports = function(grunt) {
         files: [{
           dot: true,
           src: [
-            'public/js',
+            'js/<%= pkg.name %>.min.js'
           ]
         }]
       }
@@ -57,8 +53,21 @@ module.exports = function(grunt) {
       js: {
         src: [
           'js/jquery.easing.min.js',
-          'js/app.js'
+          'js/<%= pkg.name %>.js'
         ],
+        dest: 'public/js/<%= pkg.name %>.js'
+      }
+    },
+
+    browserify: {
+      app: {
+        options: {
+          watch: true,
+          browserifyOptions: {
+            debug: true
+          }
+        },
+        src: 'js/**/**.js',
         dest: 'public/js/<%= pkg.name %>.js'
       }
     },
@@ -69,7 +78,6 @@ module.exports = function(grunt) {
         mangle: true,
         compress: true
       },
-
       build: {
         src: 'public/js/<%= pkg.name %>.js',
         dest: 'public/js/<%= pkg.name %>.min.js'
@@ -82,47 +90,57 @@ module.exports = function(grunt) {
 
     scsslint: {
       allFiles: [
-        'scss/*.scss',
-      ]
-    },
-
-    cssmin: {
-      dist: {
-        files: {
-          'public/css/<%= pkg.name %>.min.css': ['public/css/<%= pkg.name %>.css']
-        }
+        'scss/*.scss'
+      ],
+      options: {
+        config: '.scss-lint.yml'
       }
     },
 
-    imagemin: {
+    sass: {
+      options: {
+        compass: true
+      },
       dist: {
         files: [{
           expand: true,
-          cwd: 'img',
-          src: '**/*.{gif,jpeg,jpg,png,ico}',
-          dest: 'public/img'
+          cwd: 'scss',
+          src: '*.scss',
+          dest: '.tmp/css',
+          ext: '.css'
+        }]
+      }
+    },
+
+    cssmin: {
+      options: {
+        sourceMap: false
+      },
+      target: {
+        files: [{
+          expand: true,
+          cwd: '.tmp/css',
+          src: ['*.css', '!*.min.css'],
+          dest: 'public/css',
+          ext: '.min.css'
         }]
       }
     },
 
     compass: {
-      dist: {
-        options: {
-          sassDir: 'scss',
-          cssDir: '.tmp/css',
-          config: 'config.rb'
-        }
+      options: {
+        config: 'config.rb'
       }
     },
 
     watch: {
       scripts: {
-        files: ['js/**/*.*'],
-        tasks: ['html', 'js'],
+        files: ['index.html', 'scss/*', 'js/**/*.*'],
+        tasks: ['js'],
         options: {
-          livereload: false,
+          livereload: true,
           spawn: false
-        },
+        }
       },
 
       css: {
@@ -131,14 +149,6 @@ module.exports = function(grunt) {
         options: {
           livereload: true,
           spawn: false
-        }
-      }
-    },
-
-    targethtml: {
-      dist: {
-        files: {
-          'dist/index.html': 'index.html',
         }
       }
     },
@@ -162,31 +172,25 @@ module.exports = function(grunt) {
         gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d' // options to use with '$ git describe'
       }
     }
-
   });
 
-  grunt.registerTask('html', [
-    //'concat:html'
+  grunt.registerTask('js', [
+    'clean:js',
+    'browserify',
+    'uglify'
   ]);
 
   grunt.registerTask('css', [
-    'compass',
+    'clean:css',
+    'sass',
     'concat:css',
     'cssmin'
   ]);
 
-  grunt.registerTask('js', [
-    'concat:js',
-    'uglify'
-  ]);
-
   grunt.registerTask('build', [
     'clean',
-    'html',
     'css',
-    'js',
-    //'imagemin',
-    //'targethtml'
+    'js'
   ]);
 
   grunt.registerTask('release', [
@@ -195,10 +199,6 @@ module.exports = function(grunt) {
     'push'
   ]);
 
-  grunt.registerTask('default', [
-    //'newer:scsslint',
-    'build'
-  ]);
-
+  grunt.registerTask('default', 'build');
 };
 
