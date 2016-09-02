@@ -1,0 +1,107 @@
+@import 'animate';
+@import 'colors';
+@import 'helpers';
+
+.CommentsPane.has--loaded .ToggleButton {
+  display: block;
+}
+.CommentsPane .ToggleButton:hover {
+  cursor: pointer;
+  background: $cDarkBlue;
+}
+
+.CommentsPane .ToggleButton {
+  @include border-radius(40px);
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: -40px;
+  width: 30px;
+  height: 30px;
+  margin-top: -15px;
+  border: none;
+  outline: none;
+  background: $cBlue;
+  box-shadow: none;
+  transition: background 150ms ease;
+}
+.CommentsPane.is--open .ToggleButton:after {
+  right: 11px;
+  background: url('/img/reverse_arrow.svg');
+}
+.CommentsPane .ToggleButton:after {
+  position: absolute;
+  top: 9px;
+  right: 12px;
+  width: 7px;
+  height: 12px;
+  background: url('/img/arrow.svg');
+  content: '';
+}
+.CommentsPane.is--first-time .ToggleButton:after {
+  @include animation(bounce-arrow 1s ease-in-out infinite);
+  right: 10px;
+}
+.CommentsPane .CommentsInnerContent {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+.CommentsPane {
+  @include box-sizing(border-box);
+  position: absolute;
+  top: 0;
+  right: -250px;
+  width: 250px;
+  height: 100%;
+  padding: 10px;
+  clear: both;
+  z-index: 100;
+  background: rgba(0,0,0,.2);
+}
+.CommentItem {
+  @include border-radius(2px);
+  @include box-sizing(border-box);
+  display: none;
+  width: 100%;
+  margin: 0 0 8px;
+  padding: 7px;
+  clear: both;
+  border: 1px solid transparent;
+  outline: none;
+  background-color: $cWhite;
+  font-family: 'Lato', sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+  text-overflow: ellipsis;
+  box-shadow: 0 2px 4px $cShadow;
+  cursor: pointer;
+  vertical-align: top;
+  z-index: 100;
+}
+.CommentItem:hover {
+  background: $cLightGray;
+}
+.CommentItem .Body {
+  font-size: 13px;
+}
+.CommentItem .Body strong {
+  font-weight: bold;
+}
+.CommentItem p {
+  word-break: break-word;
+}
+.CommentItem .Footer {
+  @include box-sizing(border-box);
+  position: relative;
+  width: 100%;
+  margin-top: 10px;
+  padding: 3px 0 0;
+  border-top: 1px solid $cLightGray;
+  color: $cDarkDarkGray;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}

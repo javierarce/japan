@@ -1,51 +1,99 @@
 {
-  "name": "japan",
+  "name": "app",
   "version": "0.0.1",
   "engines": {
-    "node": "0.12.2",
+    "node": ">=0.10.0",
     "npm": "2.8.3"
   },
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha"
   },
   "dependencies": {
-    "connect-redis": "latest",
-    "body-parser": "1.3.1",
+    "backbone": "1.3.3",
+    "body-parser": "1.15.2",
     "cartodb": "0.2.1",
-    "consolidate": "0.12.1",
-    "cookie-parser": "1.3.1",
+    "connect-redis": "latest",
+    "consolidate": "0.14.1",
+    "cookie-parser": "1.4.3",
     "ejs": "latest",
-    "errorhandler": "1.0.1",
+    "errorhandler": "1.4.3",
     "everyauth": "latest",
     "expect.js": "latest",
-    "express": "~4.9.x",
-    "express-session": "1.0.4",
+    "express": "~4.14.x",
+    "express-session": "1.14.1",
     "html": "latest",
-    "method-override": "2.0.2",
-    "morgan": "1.0.0",
+    "method-override": "2.3.6",
+    "morgan": "1.7.0",
+    "request": "latest",
+    "rss": "1.2.1",
+    "sanitize-html": "latest",
     "should": "latest",
     "sinon": "latest",
-    "swig": "~1.3.2",
-    "underscore": "latest",
-    "request": "latest",
-    "sanitize-html": "latest",
-    "rss": "1.1.1"
+    "swig": "~1.4.2",
+    "underscore": "1.8.3"
   },
   "devDependencies": {
-    "grunt": "~0.4.2",
+    "browserify": "13.1.0",
+    "browserify-shim": "3.8.12",
+    "grunt": "~0.4.5",
+    "grunt-autoprefixer": "~3.0.4",
+    "grunt-browserify": "~5.0.0",
+    "grunt-chmod": "1.1.1",
+    "grunt-concurrent": "~2.3.1",
     "grunt-contrib-clean": "~0.5.0",
-    "grunt-contrib-cssmin": "~0.9.0",
-    "grunt-scss-lint": "^0.3.3",
-    "grunt-newer": "~0.7.0",
-    "grunt-contrib-concat": "~0.3.0",
-    "grunt-contrib-uglify": "~0.2.7",
-    "grunt-contrib-imagemin": "~0.4.0",
-    "grunt-contrib-sass": "~0.6.0",
-    "grunt-contrib-compass": "~0.7.0",
-    "grunt-contrib-watch": "~0.5.3",
-    "grunt-contrib-jshint": "~0.7.2",
-    "load-grunt-tasks": "~0.4.0",
-    "time-grunt": "~0.3.1",
-    "grunt-deploy": "~0.1.7"
+    "grunt-contrib-clean": "~1.0.0",
+    "grunt-contrib-compass": "~1.1.1",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-connect": "~1.0.2",
+    "grunt-contrib-copy": "~1.0.0",
+    "grunt-contrib-cssmin": "~1.0.1",
+    "grunt-contrib-imagemin": "^1.0.1",
+    "grunt-contrib-jshint": "~1.0.0",
+    "grunt-contrib-jst": "^1.0.0",
+    "grunt-contrib-sass": "~1.0.0",
+    "grunt-contrib-uglify": "latest",
+    "grunt-contrib-watch": "~1.0.0",
+    "grunt-deploy": "~0.1.7",
+    "grunt-exec": "*",
+    "grunt-html": "^8.0.2",
+    "grunt-newer": "~1.2.0",
+    "grunt-push-release": "^0.1.1",
+    "grunt-scss-lint": "^0.5.0",
+    "grunt-string-replace": "1.3.0",
+    "grunt-svgmin": "^3.3.0",
+    "grunt-targethtml": "0.2.6",
+    "jquery": "^3.1.0",
+    "jquery.easing": "1.4.1",
+    "jquery-highlight": "3.3.0",
+    "jquery-ui": "latest",
+    "jshint-stylish": "~2.2.1",
+    "jstify": "0.14.0",
+    "load-grunt-tasks": "~3.5.2",
+    "time-grunt": "~1.4.0"
+  },
+  "browserify-shim": {
+  },
+  "files": [
+    "dist",
+    "js"
+  ],
+  "browserify": {
+    "transform": [
+      "browserify-shim",
+      "jstify"
+    ]
+  },
+  "semistandard": {
+    "globals": [
+      "cartodb",
+      "L",
+      "google",
+      "alert",
+      "localStorage"
+    ],
+    "ignore": [
+      "/js/vendor",
+      "/js/dist"
+    ]
   }
 }

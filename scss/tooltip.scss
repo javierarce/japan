@@ -1,0 +1,37 @@
+@import 'animate';
+@import 'colors';
+@import 'helpers';
+
+.Tooltip {
+  @include border-radius(2px);
+  display: none;
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  width: 120px;
+  margin-left: -60px;
+  padding: 5px;
+  box-sizing: border-box;
+  font-weight: bold;
+  line-height: 20px;
+  font-size: 11px;
+  text-align: center;
+  color: $cWhite;
+  background: $cBlue;
+  box-shadow: 0 2px 4px $cShadow;
+  z-index: 10000;
+}
+
+.Tooltip:after {
+  @include border-radius(2px);
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  width: 0;
+  height: 0;
+  margin-left: -10px;
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent transparent $cBlue;
+  content: '';
+}

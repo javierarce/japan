@@ -1,0 +1,152 @@
+@import 'animate';
+@import 'colors';
+@import 'helpers';
+
+.Popup .Comment {
+  display: none;
+  min-height: 30px;
+  padding: 10px;
+}
+.Popup .Message {
+  @include box-sizing(border-box);
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  background: $cWhite;
+  overflow: hidden;
+}
+.Popup .Message .Success strong {
+  display: block;
+  margin: auto;
+  color: $cWhite;
+  font-size: 20px;
+  font-weight: bold;
+}
+.Popup .Message .Success .SuccessMessage {
+  display: table-cell;
+  vertical-align: middle;
+}
+.Popup .Message .Success {
+  @include box-sizing(border-box);
+  display: table;
+  position: relative;
+  top: 300px;
+  width: 100%;
+  height: 100%;
+  background: $cRed;
+  text-align: center;
+}
+.Popup .Body {
+  position: relative;
+  min-width: 300px;
+  border-bottom: 1px solid $cLightGray;
+  word-break: break-word;
+}
+.Popup .Body .Controls {
+  display: flex;
+  padding: 10px;
+  text-align: center;
+}
+
+.Popup .Body .Controls .Button.Button-login:hover {
+  background: $cDarkBlue;
+  cursor: pointer;
+}
+
+.Popup .Body .Controls .Button.Button-login {
+  background: $cBlue;
+  padding: 8px 6px;
+  font-size: 13px;
+}
+
+.Popup .Body .Controls .Button {
+  flex: 1;
+  margin: 0 5px;
+  padding: 10px 5px;
+  color: $cWhite;
+}
+
+.Popup .Body .Controls .Button.Button-anon {
+  transition: background 150ms ease;
+  font-size: 13px;
+  background: none;
+  font-weight: normal;
+  text-decoration: underline;
+  padding: 0;
+  color: #333;
+}
+
+.Popup .Body .Controls .Button.Button-anon:hover {
+  color: #000;
+}
+
+.Popup.is--readonly .Comment {
+  display: block;
+}
+.Popup.is--readonly textarea {
+  display: none;
+}
+.Popup.is--readonly .Controls {
+  display: none;
+}
+.Popup.is--readonly.leaflet-popup .leaflet-popup-close-button {
+  display: none;
+}
+.Popup .Header {
+  @include border-radius(3px 3px 0 0);
+  @include background(linear-gradient(335deg, $cLightBlue, $cBlue));
+  padding: 10px;
+  border-bottom: 1px solid $cLightGray;
+  color: $cWhite;
+}
+.Popup .Footer {
+  @include box-sizing(border-box);
+  position: relative;
+  width: 100%;
+  padding: 7px 10px;
+  color: #666;
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.Popup .leaflet-popup-content-wrapper {
+  @include border-radius(2px);
+  padding: 0;
+  border: none;
+  background: $cWhite;
+  color: $cDarkGray;
+  font-size: 14px;
+  line-height: 24px;
+  box-shadow: 0 2px 4px $cShadow;
+}
+.Popup .leaflet-popup-content-wrapper a {
+  color: rgba($cWhite, 0.5);
+}
+.Popup.leaflet-popup .leaflet-popup-close-button {
+  top: 9px;
+  right: 5px;
+  color: $cWhite;
+  font-size: 16px;
+  font-weight: normal;
+}
+.Popup.leaflet-popup .leaflet-popup-close-button:hover {
+  color: #333;
+}
+.Popup .leaflet-popup-content {
+  margin: 0;
+}
+.Popup .leaflet-popup-tip {
+  @include border-radius(2px);
+  width: 12px;
+  height: 12px;
+  margin: -10px auto 0;
+  padding: 1px;
+  border: 1px solid transparent;
+  background: $cWhite;
+  box-shadow: 0 2px 4px $cShadow;
+}

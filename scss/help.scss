@@ -1,0 +1,123 @@
+@import 'animate';
+@import 'colors';
+@import 'helpers';
+
+.InformationPane {
+  @include box-sizing(border-box);
+  position: absolute;
+  top: 26px;
+  left: 405px;
+  width: 350px;
+  padding: 15px;
+  z-index: 99;
+}
+.InformationPane .CloseButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: $cDarkGray;
+  text-decoration: none;
+  font-weight: normal;
+}
+.InformationPane .tip-container {
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  width: 40px;
+  height: 20px;
+  margin: 0 auto 0 -20px;
+  overflow: hidden;
+  z-index: 0;
+}
+.InformationPane .tip {
+  @include border-radius(2px);
+  @include transform(rotate(135deg));
+  width: 12px;
+  height: 12px;
+  margin: 2px auto 0;
+  padding: 1px;
+  border: 1px solid transparent;
+  background: $cWhite;
+  box-shadow: 0 -2px 4px $cShadow;
+}
+.InformationPane .InformationPaneInner {
+  display: none;
+  position: relative;
+  top: 35px;
+}
+.InformationPane .PaneContent {
+  @include border-radius(2px);
+  @include box-sizing(border-box);
+  position: relative;
+  width: 100%;
+  padding: 10px 10px 15px;
+  border: 1px solid transparent;
+  background-color: $cWhite;
+  font-size: 14px;
+  text-align: center;
+  box-shadow: 0 2px 4px $cShadow;
+  z-index: 10;
+}
+.InformationPane .PaneContent strong {
+  font-weight: bold;
+}
+.InformationPane .PaneContent h3 {
+  margin: 0 0 10px;
+  padding: 0 0 5px;
+  border-bottom: 1px solid $cLightGray;
+  text-align: left;
+}
+.InformationPane .PaneContent p {
+  margin-bottom: 10px;
+  line-height: 130%;
+  text-align: left;
+}
+
+.is--logged .InformationPane .PaneContent p:last-of-type {
+  margin-bottom: 0;
+}
+.InformationPane .PaneContent p a {
+  color: $cDarkGray;
+  font-weight: bold;
+}
+.InformationPane .PaneContent .Button {
+  text-decoration: underline;
+}
+
+.Help-inner {
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  margin-left: -15px;
+}
+
+.Help {
+  @include border-radius(40px);
+  @include box-sizing(border-box);
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  padding: 10px;
+  border: none;
+  background: $cBlue;
+  color: $cWhite;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 10px;
+  box-shadow: 0 2px 4px $cShadow;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  transition: margin 150ms ease;
+}
+.Help:hover {
+  background: $cBlue;
+  cursor: pointer;
+  margin-top: 2px;
+}
+
+.Help.is--open .Help-inner:hover .Tooltip {
+  display: block;
+}

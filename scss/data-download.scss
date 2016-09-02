@@ -1,0 +1,43 @@
+@import 'animate';
+@import 'colors';
+@import 'helpers';
+
+.DataDownload {
+  position: absolute;
+  top: 26px;
+  left: 608px;
+  width: 30px;
+  z-index: 100;
+}
+.DataDownload-icon {
+  @include border-radius(50%);
+  @include box-sizing(border-box);
+  box-shadow: 0 2px 4px $cShadow;
+  display: block;
+  position: absolute;
+  background: #2A84D2;
+  color: $cWhite;
+  border: none;
+  background: $cBlue;
+  font-weight: bold;
+  text-decoration: none;
+  outline: 0;
+  transition: margin 150ms ease;
+  width: 30px;
+  height: 30px;
+  font-size: 12px;
+  line-height: 30px;
+  text-align: center;
+}
+
+.DataDownload img {
+  @include border-radius(50%);
+  width: 100%;
+  height: 100%;
+}
+.DataDownload:hover {
+  margin-top: 2px;
+}
+.DataDownload:hover .Tooltip {
+  display: block;
+}

@@ -1,0 +1,51 @@
+@import 'compass';
+@import 'compass/reset';
+@import 'animate';
+@import 'colors';
+@import 'helpers';
+
+.InputField {
+  position: absolute;
+  top: 20px;
+  left: 50px;
+  z-index: 100;
+}
+.InputField input {
+  @include border-radius(2px);
+  @include box-sizing(border-box);
+  width: 500px;
+  height: 40px;
+  padding: 0 50px 0 13px;
+  border: 1px solid transparent;
+  outline: none;
+  background-color: $cWhite;
+  font-family: 'Lato', sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+  text-overflow: ellipsis;
+  box-shadow: 0 2px 4px $cShadow;
+}
+
+.CenterMapButton-inner {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+}
+.CenterMapButton {
+  @include opacity(0.8);
+  width: 20px;
+  height: 20px;
+  border: none;
+  outline: none;
+  background: url('/img/crosshair.png') no-repeat 0 0;
+  box-shadow: none;
+}
+.CenterMapButton-inner:hover .Tooltip {
+  display: block;
+}
+.CenterMapButton:hover {
+  @include opacity(1);
+  cursor: pointer;
+}

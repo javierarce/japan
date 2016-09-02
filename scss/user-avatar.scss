@@ -1,0 +1,39 @@
+@import 'animate';
+@import 'colors';
+@import 'helpers';
+
+.UserAvatar {
+  display: none;
+  position: absolute;
+  top: 26px;
+  left: 650px;
+  width: 30px;
+  z-index: 100;
+}
+.UserAvatar a {
+  @include border-radius(50%);
+  @include box-sizing(border-box);
+  display: block;
+  width: 30px;
+  height: 30px;
+  background: $cWhite;
+  box-shadow: 0 2px 4px $cShadow;
+  transition: margin 150ms ease;
+}
+
+.UserAvatar a:hover {
+  margin-top: 2px;
+}
+
+.UserAvatar img {
+  @include border-radius(50%);
+  width: 100%;
+  height: 100%;
+}
+.UserAvatar.is--connected {
+  display: block;
+}
+.UserAvatar:hover .Tooltip {
+  display: block;
+}
+

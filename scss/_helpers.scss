@@ -1,5 +1,7 @@
-$cRed: #F05658;
-$cBlue: #2A84D2;
+@import 'compass';
+@import 'compass/reset';
+@import 'animate';
+@import 'colors';
 
 @include keyframes(bounce-arrow) {
   0% {
@@ -139,4 +141,3 @@ $cBlue: #2A84D2;
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both;
 }
-

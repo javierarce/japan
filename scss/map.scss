@@ -1,0 +1,31 @@
+@import 'animate';
+@import 'colors';
+@import 'helpers';
+
+.Map {
+  .cartodb-zoom {
+    @include border-radius(2px);
+    @include box-sizing(border-box);
+    width: 20px;
+    border: none;
+    background-color: $cWhite;
+    box-shadow: 0 2px 4px $cShadow;
+  }
+  .cartodb-zoom a {
+    @include box-sizing(border-box);
+    width: 20px;
+    height: 20px;
+    padding: 10px 0;
+    outline: none;
+    background: none;
+    font-size: 15px;
+    font-weight: normal;
+    line-height: 0;
+    text-decoration: none;
+    text-indent: 0;
+  }
+  .cartodb-zoom a:hover {
+    background: $cLightGray;
+  }
+}
+

@@ -1,0 +1,34 @@
+@import 'animate';
+@import 'colors';
+@import 'helpers';
+
+.Button {
+  @include inline-block;
+  @include border-radius(2px);
+  width: 100%;
+  margin: auto;
+  padding: 10px 0;
+  transition: background 150ms ease;
+  border: none;
+  outline: none;
+  background: $cBlue;
+  color: $cWhite;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: none;
+}
+
+.Button:hover {
+  background: $cDarkBlue;
+  cursor: pointer;
+}
+
+
+.Button.is-red {
+  background: $cRed;
+}
+.Button.is-red:hover {
+  background: $cDarkRed;
+}
