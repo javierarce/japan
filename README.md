@@ -1,3 +1,6 @@
+> **Note**
+> Check the current version of this project: [Map with Me](https://github.com/javierarce/map-with-me)
+
 Japan
 ==================================
 
@@ -21,6 +24,3 @@ Quick start:
 8. Run the app: ```node app.js```
 9. ```open http://localhost:5000```
 
-### Customization
-
-Coming soon.
