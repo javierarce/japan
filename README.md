@@ -1,4 +1,5 @@
 > **Note**
+> 
 > Check the current version of this project: [Map with Me](https://github.com/javierarce/map-with-me)
 
 Japan
